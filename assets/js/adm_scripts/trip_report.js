@@ -20,11 +20,25 @@ $(document).ready(function() {
                     $('#loader').hide();  
                     $("#TripReportView").html(result);
 
+                var tripReportProject = $("#tripReportProject").val();
+
                     $('#TripReportData').DataTable({
                         "dom": 'Bfrtip',
-                        "buttons": [
-                            'csv', 'excel', 'pdf', 'print'
-                        ]
+                        // "buttons": [
+                        //     'csv', 'excel', 'pdf', 'print'
+                        // ]
+                        buttons: [{
+                            extend: 'pdf',
+                            title: tripReportProject
+                          }, {
+                            extend: 'excel',
+                            title: tripReportProject
+                          }, {
+                            extend: 'csv'
+                          },{
+                            extend: 'print',
+                            title: tripReportProject
+                          }]
                     });
                 },
                 error: function(jqXHR, exception) {

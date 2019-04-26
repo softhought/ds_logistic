@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
 
+
 <style>
 #contralist td{
 vertical-align: inherit;
@@ -12,12 +13,15 @@ vertical-align: inherit;
 }
 
 </style>
-
+<input type="hidden" name="tripReportProject" id="tripReportProject" value="<?php echo $tripReportProject; ?>">
 <div class="datatalberes" style="overflow-x:auto;">
 
 
 <table id="TripReportData" class="table table-bordered table-striped dataTables" style="border-collapse: collapse !important;">
-                <thead>
+                <thead> 
+                <tr>
+                  <th rowspan="1" colspan="5" style="text-align:center;"><?php echo $tripReportProject; ?></th>
+                </tr>              
                 <tr>
                   <!-- <th>Sl</th> -->
                   <th>Material</th>
@@ -28,7 +32,7 @@ vertical-align: inherit;
                 </tr>
                 </thead>
                 <tbody>
-               
+                
                   <?php 
 					// echo "<pre>";
 					// print_r($tripReport);
