@@ -85,7 +85,7 @@
   <div class="jumbotron jumbotron-fluid" style="text-align:center;background: transparent;">
     <div class="container">
       <div id="DetailList">
-      <h1 class="display-4" style="font-size: 3em;">Welcome to Logistic </h1>
+      <h1 class="display-4" style="font-size: 3em;">Welcome to AMPL </h1>
       </div>
         
     
