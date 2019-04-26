@@ -57,9 +57,19 @@ class Tripreport extends CI_Controller{
             $materialCount=$this->commondatamodel->rowcount('material_type');
             $shiftCount=$this->commondatamodel->rowcount('shift_master');
             $result['tripReport']=$this->tripreportmodel->getTripReport($fromDate,$toDate,$project);
-            //$result['tripReport']=$this->tripreportmodel->abc($fromDate,$toDate,$project);
+            
+            if ($project!=0) {
+                $where=[
+                    "project_id"=>$project
+                ];
+                $projectName=$this->commondatamodel->getSingleRowByWhereCls('project_master',$where);
+               $result['tripReportProject']="Trip Report For ".$projectName->project_nickname;
+            }else {
+                $result['tripReportProject']="Trip Report";
+            }
+            
 
-        //print_r($result['tripReport']);exit;
+        //print_r($result['tripReportProject']);exit;
 
                         
             $page = 'dashboard/admin_dashboard/reports/shift_working_report/trip_report_partial_view';
