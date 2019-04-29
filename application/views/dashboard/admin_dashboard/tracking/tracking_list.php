@@ -67,7 +67,7 @@
                     <div class="form-group">
                             <label for="project">Project</label> 
                             <select id="project" name="project" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
-                              <option value="0">Select</option>
+                             <!--  <option value="0">Select</option> -->
                                 <?php 
                                   if($bodycontent['projectList'])
                                   {

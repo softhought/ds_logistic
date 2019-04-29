@@ -4,7 +4,7 @@
 
 $(document ).ready(function() {
     var basepath = $("#basepath").val();
-    getTrackingDetailData(basepath);
+  //  getTrackingDetailData(basepath);
 
     $(document).on('click','#trackingSearchBtn',function(e){
              e.preventDefault();    

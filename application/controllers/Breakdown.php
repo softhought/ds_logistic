@@ -335,7 +335,7 @@ public function getBreakdownHistorylistbydate()
                 "is_approved" => $setstatus,
                 "start_time" => NULL,
                 "end_time" => NULL,
-                "is_approved" => NULL,
+                "is_approved" => 'N',
                 "breakdown_cause_id" => NULL,
                 "narration" => NULL,
                 );
