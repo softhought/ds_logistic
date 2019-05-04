@@ -1,10 +1,10 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-class Tripreport extends CI_Controller{
+class Tipperreport extends CI_Controller{
     public function __construct() {
         parent::__construct();
         $this->load->library('session');
         $this->load->model('commondatamodel','commondatamodel',TRUE);
-        $this->load->model('tripreportmodel','tripreportmodel',TRUE);
+        $this->load->model('Tipperreport_model','tipperreport',TRUE);
 
         ini_set('memory_limit', '960M');
         ini_set('post_max_size', '640M');
@@ -17,10 +17,10 @@ class Tripreport extends CI_Controller{
         $session = $this->session->userdata('user_data');
         if($this->session->userdata('user_data'))
         {   $result = [];            
-            $page = 'dashboard/admin_dashboard/reports/shift_working_report/trip_report';
+            $page = 'dashboard/admin_dashboard/reports/tipper_wise_trip/tipper_report';
             $result['projectList'] = $this->commondatamodel->getAllDropdownData("project_master");
            // $result['trackingList']=$this->trackingmodel->getTrackingDetailsList();
-        
+          
             $header = "";
            
             createbody_method($result, $page, $header, $session);
@@ -30,8 +30,8 @@ class Tripreport extends CI_Controller{
         }
     }
 
-
-    public function Tripreport()
+   /* Tipper wise Trip Report */  
+    public function tipperWisereport()
     {
         $session = $this->session->userdata('user_data');
         if($this->session->userdata('user_data'))
@@ -50,29 +50,34 @@ class Tripreport extends CI_Controller{
                  $fromDate = NULL;
                  $toDate = NULL;
              }
-
-            $project=$this->input->post('project');
+ 
+           $project=$this->input->post('project');
+           $reoprtType='Trip';
            
 
             $materialCount=$this->commondatamodel->rowcount('material_type');
             $shiftCount=$this->commondatamodel->rowcount('shift_master');
-            $result['tripReport']=$this->tripreportmodel->getTripReport($fromDate,$toDate,$project);
+            $result['tipperawiseReport']=$this->tipperreport->getTipperTripReport($fromDate,$toDate,$project,$reoprtType);
+            $result['materialList']=$this->tipperreport->getMererialTypeList($project);
+
+           // pre($result['tipperawiseReport']);
+           
+
+
+            $result['shift']=$this->commondatamodel->getAllDropdownData('shift_master');
             
             if ($project!=0) {
                 $where=[
                     "project_id"=>$project
                 ];
                 $projectName=$this->commondatamodel->getSingleRowByWhereCls('project_master',$where);
-               $result['tripReportProject']="Trip Report For ".$projectName->project_nickname;
+               $result['tripReportProject']="Tripper wise Report For ".$projectName->project_nickname;
             }else {
-                $result['tripReportProject']="Trip Report";
+                $result['tripReportProject']="Tripper wise Report";
             }
             
-
-        //print_r($result['tripReportProject']);exit;
-
-                        
-            $page = 'dashboard/admin_dashboard/reports/shift_working_report/trip_report_partial_view';
+    
+            $page = 'dashboard/admin_dashboard/reports/tipper_wise_trip/tipper_report_partial_view';
            
            
             $display = $this->load->view($page,$result,TRUE);
@@ -82,14 +87,13 @@ class Tripreport extends CI_Controller{
             redirect('login','refresh');
         }
     }
-
 
     public function quantityview()
     {
         $session = $this->session->userdata('user_data');
         if($this->session->userdata('user_data'))
         {   $result = [];            
-            $page = 'dashboard/admin_dashboard/reports/shift_working_report/quantity_trip_report';
+            $page = 'dashboard/admin_dashboard/reports/tipper_wise_trip/quantity_tipper_report';
             $result['projectList'] = $this->commondatamodel->getAllDropdownData("project_master");
            
           
@@ -102,8 +106,8 @@ class Tripreport extends CI_Controller{
         }
     }
 
-
-    public function quantityReport()
+   /* Tipper wise Quantity Report */   
+    public function tipperWiseQuantityreport()
     {
         $session = $this->session->userdata('user_data');
         if($this->session->userdata('user_data'))
@@ -122,30 +126,34 @@ class Tripreport extends CI_Controller{
                  $fromDate = NULL;
                  $toDate = NULL;
              }
-
-            $project=$this->input->post('project');
+ 
+           $project=$this->input->post('project');
+           $reoprtType='Quantity';
            
 
             $materialCount=$this->commondatamodel->rowcount('material_type');
             $shiftCount=$this->commondatamodel->rowcount('shift_master');
-          
-            $result['tripReport']=$this->tripreportmodel->getQuantityTripReport($fromDate,$toDate,$project);
+            $result['tipperawiseReport']=$this->tipperreport->getTipperTripReport($fromDate,$toDate,$project,$reoprtType);
+            $result['materialList']=$this->tipperreport->getMererialTypeList($project);
+
+           // pre($result['tipperawiseReport']);
+           
+
+
+            $result['shift']=$this->commondatamodel->getAllDropdownData('shift_master');
             
             if ($project!=0) {
                 $where=[
                     "project_id"=>$project
                 ];
                 $projectName=$this->commondatamodel->getSingleRowByWhereCls('project_master',$where);
-               $result['tripReportProject']="Quantity Report For ".$projectName->project_nickname;
+               $result['quantityReportProject']="Tripper wise Quantity Report For ".$projectName->project_nickname;
             }else {
-                $result['tripReportProject']="Quantity Report";
+                $result['quantityReportProject']="Tripper wise Quantity Report";
             }
             
-
-        //print_r($result['tripReportProject']);exit;
-
-                        
-            $page = 'dashboard/admin_dashboard/reports/shift_working_report/quantity_partial_view';
+    
+            $page = 'dashboard/admin_dashboard/reports/tipper_wise_trip/quantity_tipper_report_partial_view';
            
            
             $display = $this->load->view($page,$result,TRUE);
@@ -155,6 +163,11 @@ class Tripreport extends CI_Controller{
             redirect('login','refresh');
         }
     }
+
+
+
+
+
 
 
 
