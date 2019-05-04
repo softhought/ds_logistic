@@ -148,16 +148,16 @@ function validateDriver()
     var frmdt=$('#fromDate').val().replace('/', '-');
     var todt=$('#toDate').val().replace('/', '-');
     //alert(frmdt);
-    if(frmdt > todt)
-    {
-        $("#fromDate").focus();
-        $("#error_msg")
-        .text("Error : From Date Cannot be greater than To Date")
-        .addClass("form_error")
-        .css("display", "block");
-        return false;
+    // if(frmdt > todt)
+    // {
+    //     $("#fromDate").focus();
+    //     $("#error_msg")
+    //     .text("Error : From Date Cannot be greater than To Date")
+    //     .addClass("form_error")
+    //     .css("display", "block");
+    //     return false;
 
-    }    
+    // }    
     return true;
 }
 

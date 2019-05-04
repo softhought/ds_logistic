@@ -14,7 +14,7 @@ $(document).ready(function() {
             $('#loader').show();
             var formDataserialize = $("#ExcavatorLeadLiftReport").serialize();
             var urlpath = basepath + 'excavatoleadliftreport/excavatorLeadLiftReport';
-            $("#tipperDriverReportView").html('');
+            $("#excavatorLeadLiftReportView").html('');
             $.ajax({        
                 type: "POST",
                 url: urlpath,
@@ -22,11 +22,11 @@ $(document).ready(function() {
                 dataType: "html",            
                 success: function(result) {
                     $('#loader').hide();  
-                    $("#tipperDriverReportView").html(result);
+                    $("#excavatorLeadLiftReportView").html(result);
 
                 var tripReportProject = $("#tripReportProject").val();
 
-                    $('#TripReportData').DataTable({
+                 /*   $('#leadliftReportData').DataTable({
                         "dom": 'Bfrtip',
 
                         // "buttons": [
@@ -44,7 +44,7 @@ $(document).ready(function() {
                             extend: 'print',
                             title: tripReportProject
                           }]
-                    });
+                    }); */
                 },
                 error: function(jqXHR, exception) {
                     var msg = '';
@@ -71,6 +71,16 @@ $(document).ready(function() {
 
 
 
+       $(document).on('click','#downloadxls',function(){
+
+          $('#reporttable').tableExport({type:'excel',escape:'false',});
+        // alert();
+        
+    });
+
+
+   
+
 
 /*.....................................................*/
 });/* document ready end */
@@ -82,17 +92,18 @@ function validateLeadLift()
     var frmdt=$('#fromDate').val().replace('/', '-');
     var todt=$('#toDate').val().replace('/', '-');
     var project=$('#project').val();
-    //alert(frmdt);
-    if(frmdt > todt)
-    {
-        $("#fromDate").focus();
-        $("#error_msg")
-        .text("Error : From Date Cannot be greater than To Date")
-        .addClass("form_error")
-        .css("display", "block");
-        return false;
+    console.log(frmdt);
+    console.log(todt);
+    // if(frmdt > todt)
+    // {
+    //     $("#fromDate").focus();
+    //     $("#error_msg")
+    //     .text("Error : From Date Cannot be greater than To Date")
+    //     .addClass("form_error")
+    //     .css("display", "block");
+    //     return false;
 
-    }  
+    // }  
 
     if(project=='0')
     {

@@ -1,4 +1,6 @@
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/adm_scripts/excavatoleadliftreport.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/tableExport.js"></script>  
+<script src="<?php echo base_url(); ?>assets/js/jquery.base64.js"></script>  
 <style>
 
 .excavatorerror{
@@ -115,7 +117,7 @@
                   Please Wait Loading ...
               </div>
 
-              <div id="excavatorwiseReportView">
+              <div id="excavatorLeadLiftReportView">
 
                 
 

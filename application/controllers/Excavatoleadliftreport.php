@@ -4,7 +4,7 @@ class Excavatoleadliftreport extends CI_Controller{
         parent::__construct();
         $this->load->library('session');
         $this->load->model('commondatamodel','commondatamodel',TRUE);
-        $this->load->model('Operatorreport_model','operatorreport',TRUE);
+        $this->load->model('Excavatoleadliftreport_model','excavatoleadlift',TRUE);
 
         ini_set('memory_limit', '960M');
         ini_set('post_max_size', '640M');
@@ -52,47 +52,53 @@ class Excavatoleadliftreport extends CI_Controller{
              }
  
            $project=$this->input->post('project');
-           echo $reoprtType='Trip';
+           $reoprtType='Trip';
            
-exit;
+
             $materialCount=$this->commondatamodel->rowcount('material_type');
             $shiftCount=$this->commondatamodel->rowcount('shift_master');
-            $result['excawiseReport']=$this->excavatorreport->getExcavatorTripReport($fromDate,$toDate,$project,$reoprtType);
-            $result['materialList']=$this->excavatorreport->getMererialTypeList($project);
+            $result['excawiseLeadLift']=$this->excavatoleadlift->getExcavatorLeadLiftReport($fromDate,$toDate,$project,$reoprtType);
+            $result['materialList']=$this->excavatoleadlift->getMererialTypeList($project);
+           // pre($result['excawiseLeadLift']);
            
 
 
             $result['shift']=$this->commondatamodel->getAllDropdownData('shift_master');
+            $result['lead_lift_report']=$this->commondatamodel->getAllDropdownData('lead_lift_report');
+
             
             if ($project!=0) {
                 $where=[
                     "project_id"=>$project
                 ];
                 $projectName=$this->commondatamodel->getSingleRowByWhereCls('project_master',$where);
-               $result['tripReportProject']="Excavator wise Report For ".$projectName->project_nickname;
+               $result['tripReportProject']="Excavator Lead and Lift Report For ".$projectName->project_nickname;
             }else {
-                $result['tripReportProject']="Excavator wise Report";
+                $result['tripReportProject']="Excavator Lead and Lift Report";
             }
             
+/*
+      foreach ($result['excawiseLeadLift'] as $excawiseLeadLift) {
+        
+                foreach ($excawiseLeadLift['excavatorList'] as $excavatorList) {
+                 //  pre($excavatorList['LeadLiftColumn']);
+                        echo '<br>'. $excavatorList['excavator']->equipment_name;
+                        echo "<br>-------------------------------<br>";
+                       foreach ($excavatorList['LeadLiftColumn'] as $leadliftcolumn) {
 
-   /*     foreach ($result['excawiseReport'] as $excawisereport) {
-         //  pre($excawisereport['materialType']);
-                foreach ($excawisereport['materialType'] as $materialtype) {
-                     // pre($materialtype);
-
-                       foreach($materialtype['shiftType'] as $shiftType) {
-                      //     pre($shiftType['shiftTripCount']);
-                            echo $shiftType['shiftTripCount'];
-                        
-
+                            // pre($leadliftcolumn['materialType']);
+                            foreach ($leadliftcolumn['materialType'] as $meterialtype) {
+                             // echo '<br>'.$meterialtype['material'];
+                              //  pre($meterialtype);
+                            }
                        }
-
+                      
 
                 }
         } */
 
-                //  exit;      
-            $page = 'dashboard/admin_dashboard/reports/excavator_wise_trip/excavaror_report_partial_view';
+                 // exit;      
+            $page = 'dashboard/admin_dashboard/reports/excaveror_lead_lift/excaveror_lead_lift_report_partial_view';
            
            
             $display = $this->load->view($page,$result,TRUE);

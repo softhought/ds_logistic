@@ -480,16 +480,16 @@ function validateQuantity()
     //alert(frmdt);
 
 
-    if(frmdt > todt)
-    {
-        $("#fromDate").focus();
-        $("#error_msg")
-        .text("Error : From Date Cannot be greater than To Date")
-        .addClass("form_error")
-        .css("display", "block");
-        return false;
+    // if(frmdt > todt)
+    // {
+    //     $("#fromDate").focus();
+    //     $("#error_msg")
+    //     .text("Error : From Date Cannot be greater than To Date")
+    //     .addClass("form_error")
+    //     .css("display", "block");
+    //     return false;
 
-    }
+    // }
 
     if(projectid=='0')
     {
@@ -514,16 +514,16 @@ function validateExcavatorRep()
     //alert(frmdt);
 
 
-    if(frmdt > todt)
-    {
-        $("#fromDate").focus();
-        $("#error_msg")
-        .text("Error : From Date Cannot be greater than To Date")
-        .addClass("form_error")
-        .css("display", "block");
-        return false;
+    // if(frmdt > todt)
+    // {
+    //     $("#fromDate").focus();
+    //     $("#error_msg")
+    //     .text("Error : From Date Cannot be greater than To Date")
+    //     .addClass("form_error")
+    //     .css("display", "block");
+    //     return false;
 
-    }
+    // }
 
     if(projectid=='0')
     {
@@ -548,16 +548,16 @@ function validateExcavatorQtyRep()
     //alert(frmdt);
 
 
-    if(frmdt > todt)
-    {
-        $("#fromDate").focus();
-        $("#error_msg")
-        .text("Error : From Date Cannot be greater than To Date")
-        .addClass("form_error")
-        .css("display", "block");
-        return false;
+    // if(frmdt > todt)
+    // {
+    //     $("#fromDate").focus();
+    //     $("#error_msg")
+    //     .text("Error : From Date Cannot be greater than To Date")
+    //     .addClass("form_error")
+    //     .css("display", "block");
+    //     return false;
 
-    }
+    // }
 
     if(projectid=='0')
     {
@@ -583,16 +583,16 @@ function validateTripperRep()
     //alert(frmdt);
 
 
-    if(frmdt > todt)
-    {
-        $("#fromDate").focus();
-        $("#error_msg")
-        .text("Error : From Date Cannot be greater than To Date")
-        .addClass("form_error")
-        .css("display", "block");
-        return false;
+    // if(frmdt > todt)
+    // {
+    //     $("#fromDate").focus();
+    //     $("#error_msg")
+    //     .text("Error : From Date Cannot be greater than To Date")
+    //     .addClass("form_error")
+    //     .css("display", "block");
+    //     return false;
 
-    }
+    // }
 
     if(projectid=='0')
     {
@@ -618,16 +618,16 @@ function validateTripperQtyRep()
     //alert(frmdt);
 
 
-    if(frmdt > todt)
-    {
-        $("#fromDate").focus();
-        $("#error_msg")
-        .text("Error : From Date Cannot be greater than To Date")
-        .addClass("form_error")
-        .css("display", "block");
-        return false;
+    // if(frmdt > todt)
+    // {
+    //     $("#fromDate").focus();
+    //     $("#error_msg")
+    //     .text("Error : From Date Cannot be greater than To Date")
+    //     .addClass("form_error")
+    //     .css("display", "block");
+    //     return false;
 
-    }
+    // }
 
     if(projectid=='0')
     {
