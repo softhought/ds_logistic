@@ -16,7 +16,7 @@
 
     <div class="row">
       <div class="col-md-12">
-        <div class="box box-primary formBlock">
+        <div class="box box-primary formBlockMedium">
               <div class="box-header with-border">
                 <h3 class="box-title">Lead Against Vehicle </h3>
                  <a href="<?php echo base_url();?>lead" class="link_tab"><span class="glyphicon glyphicon-list"></span> List</a>
@@ -33,7 +33,7 @@
                   <input type="hidden" name="mode" id="mode" value="<?php echo $bodycontent['mode']; ?>" />
 
                   <div class="row">
-                          <div class="col-md-12">
+                          <div class="col-md-6">
                       <div id="project_div" class="form-group">
                           <label for="project">Project</label> 
                           <select id="project" name="project" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
@@ -50,9 +50,8 @@
                           </select>
                         </div>
                       </div><!-- end of col-md-6 -->
-                  </div>
-                  <div class="row">
-                     <div class="col-md-6">
+
+                        <div class="col-md-6">
                       <div class="form-group">
                           <label for="sel_servier">Surveyor</label> 
                           <div id="servier_dropdown">
@@ -74,7 +73,12 @@
                         </div>
                       </div><!-- end of col-md-6 -->
 
-                      <div class="col-md-6">
+                  </div>
+
+                  <div class="row">
+                   
+
+                      <div class="col-md-4">
                       <div class="form-group">
                           <label for="shift">Shift</label> 
                           <select id="sel_shift" name="sel_shift" class="form-control selectpicker" data-show-subtext="true" data-live-search="true" >
@@ -92,15 +96,9 @@
                             
                           </select>
                         </div>
-                      </div><!-- end of col-md-6 -->
+                      </div><!-- end of col-md-4 -->
 
-                  </div>
-
-                  <div class="row">
-
-                    
-
-                        <div class="col-md-6">
+                       <div class="col-md-4">
                         <div class="form-group">
                             <label>For Date</label>
                             <div class="input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
@@ -111,9 +109,9 @@
                             </div>
                             <!-- /.input group -->
                         </div>
-                  </div>   <!-- /.col-md-6 END -->
+                  </div>   <!-- /.col-md-4 END -->
 
-                        <div class="col-md-6">
+                   <div class="col-md-4">
                       <div class="form-group">
                           <label for="excavator">Excavator</label> 
                           <div id="excavator_dropdown">
@@ -125,80 +123,28 @@
                           </select>
                         </div>
                         </div>
-                      </div><!-- end of col-md-6 -->
+                      </div><!-- end of col-md-4 -->
 
                   </div>
 
-                  <div class="row">
+                  <!-- start of details -->
+                 <div id="material_details_data">
 
-                 
+               
 
-                      <div class="col-md-6">
-                      <div class="form-group">
-                          <label for="material_type">Carrying</label> 
-                         <div id="material_dropdown">
-                          <select id="material_type" name="material_type" class="form-control selectpicker" data-show-subtext="true" data-live-search="true" >
-                            <option value="0">Select</option>
-                           
-                          </select>
-                        </div>
-
-                        </div>
-                      </div><!-- end of col-md-6 -->
-
-                         <div class="col-md-6">
-                          <div class="form-group">
-                            <label for="lead">Lead</label>
-                            <input type="text" class="form-control forminputs " id="lead" name="lead" placeholder="Lead" autocomplete="off" value="" >
-
-                          
-                          </div>
-                      </div><!-- end of col-md-12 -->
+                </div><!-- end of details -->
 
 
-                  </div>
 
-                  <div class="row">
+                
 
-
-                      <div class="col-md-6">
-                        <div class="form-group">
-                        
-                          <label for="rl_in_face">RL In Face</label>
-                          <input type="text" class="form-control forminputs" id="rl_in_face" name="rl_in_face" placeholder="RL In face" autocomplete="off" value=""   />
-
-
-                        </div>
-                      </div> <!-- end of col-md-12 -->
-
-
-                           <div class="col-md-6">
-                        <div class="form-group">
-                        
-                          <label for="rl_in_dump">RL In Dump</label>
-                          <input type="text" class="form-control forminputs" id="rl_in_dump" name="rl_in_dump" placeholder="RL In Dump" autocomplete="off" value="" <?php if($bodycontent['mode']=="EDIT"){echo "readonly"; }?>  />
-
-
-                        </div>
-                      </div> <!-- end of col-md-12 -->
-                   
-                  </div>
-
-                   <div class="row">
-
-                 
-                   
-                  </div>
+                  
 
 
 
                   <p id="error_msg" class="form_error"></p>
 
-                  <div class="btnDiv">
-                      <button type="submit" class="btn btn-primary formBtn" id="leadsavebtn"><?php echo $bodycontent['btnText']; ?></button>
-                    
-					            <span class="btn btn-primary formBtn loaderbtn" id="loaderbtn" style="display:none;"><i class="fa fa-spinner rotating" aria-hidden="true"></i> <?php echo $bodycontent['btnTextLoader']; ?></span>
-                  </div>
+               
                   
                 </div>
                 <!-- /.box-body -->

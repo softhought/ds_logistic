@@ -98,6 +98,7 @@ class Material extends CI_Controller{
 			$mode = trim(htmlspecialchars($dataArry['mode']));
 
             $material = trim(htmlspecialchars($dataArry['material']));
+            $unit = trim(htmlspecialchars($dataArry['unit']));
            
 			
 			
@@ -117,7 +118,8 @@ class Material extends CI_Controller{
 					$upd_where = array('material_type.material_type_id' =>$materialID);
 
                     $upd_array = array(
-                        'material' => $material
+                        'material' => $material,
+                        'unit' => $unit
                        
                      );
 
@@ -151,6 +153,7 @@ class Material extends CI_Controller{
 
                     $insert_array = array(
                                             'material' => $material,
+                                            'unit' => $unit,
                                             'is_active' => 'Y'
                                          );
 			

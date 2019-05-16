@@ -17,7 +17,9 @@ class Lead extends CI_Controller{
             $page = 'dashboard/admin_dashboard/lead/lead_list';
 
             $today=date("Y-m-d");
-            $result['leadagvehiList']=$this->lead->getLeadAgainstVehicleList($today);
+            $project=0;
+            $result['leadagvehiList']=$this->lead->getLeadAgainstVehicleList($today,$project);
+             $result['projectList'] = $this->commondatamodel->getAllDropdownData("project_master");
             $header = "";
             createbody_method($result,$page,$header,$session);
 
@@ -36,6 +38,7 @@ class Lead extends CI_Controller{
 
 
                $shiftdate=$this->input->post('shiftdate');
+               $project=$this->input->post('project');
             
             if($shiftdate!=""){
                 $shiftdate = str_replace('/', '-', $shiftdate);
@@ -45,7 +48,7 @@ class Lead extends CI_Controller{
                  $shiftdate = NULL;
              }
 
-            $result['leadagvehiList']=$this->lead->getLeadAgainstVehicleList($shiftdate);
+            $result['leadagvehiList']=$this->lead->getLeadAgainstVehicleList($shiftdate,$project);
             $header = "";
 
              $display = $this->load->view($page,$result,TRUE);
@@ -129,21 +132,23 @@ class Lead extends CI_Controller{
         {
             $json_response = array();
             $formData = $this->input->post('formDatas');
+            $rowDtlNo = $this->input->post('rowDtlNo');
             parse_str($formData, $dataArry);
             
          
           
-        
+    
             $leadID = trim(htmlspecialchars($dataArry['leadID']));
             $mode = trim(htmlspecialchars($dataArry['mode']));
             $sel_servier = $dataArry['sel_servier'];
             $sel_shift = $dataArry['sel_shift'];
             
             $sel_excavator = $dataArry['sel_excavator'];
-            $material_type = $dataArry['material_type'];
-            $lead = trim(htmlspecialchars($dataArry['lead']));
-            $rl_in_face = trim(htmlspecialchars($dataArry['rl_in_face']));
-            $rl_in_dump = trim(htmlspecialchars($dataArry['rl_in_dump']));
+
+            $material_type = $dataArry['material_type_'.$rowDtlNo];
+            $lead = trim(htmlspecialchars($dataArry['lead_'.$rowDtlNo]));
+            $rl_in_face = trim(htmlspecialchars($dataArry['rl_in_face_'.$rowDtlNo]));
+            $rl_in_dump = trim(htmlspecialchars($dataArry['rl_in_dump_'.$rowDtlNo]));
 
             $shiftdate = $dataArry['shiftdate'];
             
@@ -246,6 +251,33 @@ class Lead extends CI_Controller{
 
 
             }else{
+
+
+                // -------------------
+
+                 $LeadData=$this->commondatamodel->getSingleRowByWhereCls('lead_against_vehicle',$checkarray);
+
+                 $leadagveid=$LeadData->id;   
+                  
+                 $update_array  = array(
+                    "lead" => $lead,
+                    "rl_in_face" => $rl_in_face,
+                    "rl_in_dump" => $rl_in_dump
+               
+                );
+                
+            $where = array(
+                "lead_against_vehicle.id" => $leadagveid
+                );
+            
+            
+        
+            $update = $this->commondatamodel->updateSingleTableData('lead_against_vehicle',$update_array,$where);
+
+
+
+
+
 
                      $json_response = array(
                             "msg_status" => 0,
@@ -415,19 +447,75 @@ public function getExcavatorByServier()
               
 
            }
-           
-
-      
 
              // pre($result['materialTypeList']);
 
              // exit;
              
 
-            $page = 'dashboard/admin_dashboard/lead/material_view';
+         //   $page = 'dashboard/admin_dashboard/lead/material_view';
+            $page = 'dashboard/admin_dashboard/lead/material_list_view';
             //$partial_view = $this->load->view($page,$result);
             echo $this->load->view($page, $result, TRUE);
             //echo $partial_view;
+        }
+        else
+        {
+            redirect('login','refresh');
+        }
+    }
+
+
+     public function updateLeadData(){
+        $session = $this->session->userdata('user_data');
+        if($this->session->userdata('user_data'))
+        {
+            $json_response = array();
+            $formData = $this->input->post('formDatas');
+            parse_str($formData, $dataArry);
+            
+             $leadagveid = $dataArry['leadagveid'];
+          
+        
+            
+            $rl_in_face = trim(htmlspecialchars($dataArry['rl_in_face']));
+            $lead = trim(htmlspecialchars($dataArry['lead']));
+            $rl_in_dump = trim(htmlspecialchars($dataArry['rl_in_dump']));
+            
+            $update_array  = array(
+                "lead" => $lead,
+                "rl_in_face" => $rl_in_face,
+                "rl_in_dump" => $rl_in_dump
+               
+                );
+                
+            $where = array(
+                "lead_against_vehicle.id" => $leadagveid
+                );
+            
+            
+        
+            $update = $this->commondatamodel->updateSingleTableData('lead_against_vehicle',$update_array,$where);
+            if($update)
+            {
+                $json_response = array(
+                    "msg_status" => 1,
+                    "msg_data" => "Successfully updated"
+                );
+            }
+            else
+            {
+                $json_response = array(
+                    "msg_status" => 0,
+                    "msg_data" => "Failed to update"
+                );
+            }
+
+
+        header('Content-Type: application/json');
+        echo json_encode( $json_response );
+        exit;
+
         }
         else
         {

@@ -37,6 +37,13 @@
 
                            
                           </div>
+
+                           <div class="form-group">
+                            <label for="eqpname">Unit</label>
+                            <input type="text" class="form-control forminputs " id="unit" name="unit" placeholder="" autocomplete="off" value="<?php if($bodycontent['mode']=="EDIT"){echo $bodycontent['materialEditdata']->unit;}?>" >
+
+                           
+                          </div>
                       </div><!-- end of col-md-12 -->
 
                       <div class="col-md-12">

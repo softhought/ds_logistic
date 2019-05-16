@@ -130,7 +130,7 @@ class Excavatoleadliftreport_model extends CI_Model
            
               $data[]=[
                         "LeadLiftColumnData"=>$rows,
-                        "materialType"=>$this->getMererialByProject($fromDate,$toDate,$project,$reoprtType,$shift_code,$equipment_id)
+                        "materialType"=>$this->getMererialByProject($fromDate,$toDate,$project,$reoprtType,$shift_code,$equipment_id,$rows->column_type)
                       ];
 
         
@@ -146,7 +146,7 @@ class Excavatoleadliftreport_model extends CI_Model
 
 
 
-        public function getMererialByProject($fromDate,$toDate,$project,$reoprtType,$shift_code,$equipment_id)
+        public function getMererialByProject($fromDate,$toDate,$project,$reoprtType,$shift_code,$equipment_id,$column_type)
     {
       $data=[];
 
@@ -173,7 +173,7 @@ class Excavatoleadliftreport_model extends CI_Model
                   "project_material_id"=>$rows->project_material_id,
                   "material_type_id"=>$rows->material_type_id,
                   "material"=>$rows->material,
-                  "LeadData"=>$this->getLeadExcavatorAssign($fromDate,$toDate,$project,$reoprtType,$shift_code,$equipment_id,$rows->project_material_id)
+                  "LeadData"=>$this->getLeadExcavatorAssign($fromDate,$toDate,$project,$reoprtType,$shift_code,$equipment_id,$rows->project_material_id,$column_type)
                 ]; 
            
         }
@@ -187,7 +187,8 @@ class Excavatoleadliftreport_model extends CI_Model
 
 
     // get shiftwise trip count 
-public function getLeadExcavatorAssign($fromDate,$toDate,$project,$reoprtType,$shift_code,$equipment_id,$project_material_id){
+public function getLeadExcavatorAssign($fromDate,$toDate,$project,$reoprtType,$shift_code,$equipment_id,$project_material_id,$column_type){
+
  
        $count=0;
 
@@ -198,8 +199,9 @@ public function getLeadExcavatorAssign($fromDate,$toDate,$project,$reoprtType,$s
                        
 
        );
+      if ($column_type=='Lead') {
 
-      $query=$this->db->select('
+                  $query=$this->db->select('
                          IFNULL(SUM(lead_against_vehicle.lead),0) AS lead 
                           ')
                         ->from('lead_against_vehicle')
@@ -209,13 +211,33 @@ public function getLeadExcavatorAssign($fromDate,$toDate,$project,$reoprtType,$s
                         ->where('DATE_FORMAT(`lead_against_vehicle`.`shift_date`,"%Y-%m-%d") <= ', $toDate)
                         ->get();
 
+       
+      }else{
+
+             $query=$this->db->select('
+                         IFNULL((SUM(lead_against_vehicle.rl_in_dump)- SUM(lead_against_vehicle.rl_in_face)),0) AS lift
+                          ')
+                        ->from('lead_against_vehicle')
+                        ->join('vehicle_master','vehicle_master.vehicle_id=lead_against_vehicle.vehicle_mst_id','INNER')
+                        ->where($where)
+                        ->where('DATE_FORMAT(`lead_against_vehicle`.`shift_date`,"%Y-%m-%d") >= ', $fromDate)
+                        ->where('DATE_FORMAT(`lead_against_vehicle`.`shift_date`,"%Y-%m-%d") <= ', $toDate)
+                        ->get();
+
+      }
+
+
                       
                         #q();
 
       if($query->num_rows()>0){
        
         $row = $query->row();
-           return $count = $row->lead;
+             if ($column_type=='Lead') {
+               return $count = $row->lead;
+             }else{
+               return $count = $row->lift;
+             }
        
       }
       else

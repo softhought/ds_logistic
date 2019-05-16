@@ -1,12 +1,19 @@
 $(document ).ready(function() {
     var basepath = $("#basepath").val();
+  checkEditOption();
+
    
    
-    $(document).on('submit','#leadForm',function(e){
+    $(document).on('click','.leadsave',function(e){
 		e.preventDefault();
 
+        var currRowID = $(this).attr('id');
+        var rowDtlNo = currRowID.split('_');
+         console.log(rowDtlNo[1]);
+       // console.log(rowDtlNo[2]);
 
-		if(validateLead())
+
+		if(validateLead(rowDtlNo[1]))
 		{
 
           
@@ -15,11 +22,11 @@ $(document ).ready(function() {
             formDataserialize = decodeURI(formDataserialize);
             console.log(formDataserialize);
 
-            var formData = { formDatas: formDataserialize };
+            var formData = { formDatas: formDataserialize,rowDtlNo:rowDtlNo[1] };
             var type = "POST"; //for creating new resource
             var urlpath = basepath + 'lead/lead_action';
-            $("#leadsavebtn").css('display', 'none');
-            $("#loaderbtn").css('display', 'block');
+            $("#leadsavebtn_"+rowDtlNo[1]).css('display', 'none');
+            $("#loaderbtn_"+rowDtlNo[1]).css('display', 'block');
 
             $.ajax({
                 type: type,
@@ -30,28 +37,18 @@ $(document ).ready(function() {
                 success: function(result) {
 					if (result.msg_status == 1) {
 							
-                        $("#suceessmodal").modal({
-                            "backdrop": "static",
-                            "keyboard": true,
-                            "show": true
-                        });
-                        var addurl = basepath + "lead/addLead";
-                        var listurl = basepath + "lead";
-                        $("#responsemsg").text(result.msg_data);
-                        $("#response_add_more").attr("href", addurl);
-                        $("#response_list_view").attr("href", listurl);
+                       
+                        $("#leadsavedcmp_"+rowDtlNo[1]).css('display', 'block');
 
                     } 
 					else {
-                        $("#lead_response_msg").text(result.msg_data);
+                       $("#leadsavedcmp_"+rowDtlNo[1]).css('display', 'block');
+                       
                     }
 					
-                    $("#loaderbtn").css('display', 'none');
+                        $("#loaderbtn_"+rowDtlNo[1]).css('display', 'none');
 					
-                    $("#leadsavebtn").css({
-                        "display": "block",
-                        "margin": "0 auto"
-                    });
+                  
                 },
                 error: function(jqXHR, exception) {
                     var msg = '';
@@ -150,21 +147,23 @@ $(document ).ready(function() {
     });
 
 
-   /* On select class  */
-    $(document).on("change", "#listshiftdate", function() {
+   /* On select date and project  */
+    $(document).on("change", "#listshiftdate,#project", function() {
 
         var shiftdate = $("#listshiftdate").val();
+        var project = $("#project").val();
        
         $("#leadlistdata").html('');
        
     $.ajax({
     type: "POST",
     url: basepath+'lead/getLeadListByDate',
-    data: {shiftdate:shiftdate},
+    data: {shiftdate:shiftdate,project:project},
     
     success: function(data){
         $("#leadlistdata").html(data);
         $('#example').DataTable();
+        checkEditOption();
        
     },
     error: function (jqXHR, exception) {
@@ -194,12 +193,98 @@ $(document ).ready(function() {
     });
 
 
+    $(document).on('click','.editLeadAgnVehicle',function(){
+        var leadagveid = $(this).data('leadagveid');
+        var project = $(this).data('project');
+        var shiftdate = $(this).data('shiftdate');
+        var shiftcode = $(this).data('shiftcode');
+        var excavator = $(this).data('excavator');
+        var carrying = $(this).data('carrying');
+        var lead = $(this).data('lead');
+        var mode = $(this).data("mode");
+        var rlinface = $(this).data("rlinface");
+        var rlindump = $(this).data("rlindump");
+
+
+         $("#project").html(project);
+         $("#shiftdate").html(shiftdate);
+         $("#shiftcode").html(shiftcode);
+         $("#excavator").html(excavator);
+         $("#excavator").html(excavator);
+         $("#carrying").html(carrying);
+         $("#leadagveid").val(leadagveid);
+         $("#lead").val(lead);
+         $("#rl_in_face").val(rlinface);
+         $("#rl_in_dump").val(rlindump);
+
+       
+    });
+
+
+        $(document).on('submit','#updateLeadForm',function(e){
+        e.preventDefault();
+
+
+        if(validateUpdateLead())
+        {
+
+            $("#leadupdsavebtn").css('display', 'none');
+           
+            var formDataserialize = $("#updateLeadForm").serialize();
+            formDataserialize = decodeURI(formDataserialize);
+            console.log(formDataserialize);
+
+            var formData = { formDatas: formDataserialize };
+            var type = "POST"; //for creating new resource
+            var urlpath = basepath + 'lead/updateLeadData';
+           
+
+            $.ajax({
+                type: type,
+                url: urlpath,
+                data: formData,
+                dataType: 'json',
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                success: function(result) {
+                    if (result.msg_status == 1) {
+                            
+                       $("#leadupd_response_msg").text(result.msg_data);
+                      
+
+                    } 
+                    else {
+                        $("#leadupd_response_msg").text(result.msg_data);
+                    }
+                    
+                    $("#loaderbtn").css('display', 'none');
+                  
+                    
+                    // $("#leadupdsavebtn").css({
+                    //     "display": "block",
+                    //     "margin": "0 auto"
+                    // });
+                    location.reload(); 
+                },
+                error: function(jqXHR, exception) {
+                    var msg = '';
+                }
+            });
+            
+            
+           
+            
+        }
+
+    });
+
+
+
 
 });/* document ready end */
 
 
 
-function validateLead()
+function validateLead(rowDtlNo)
 {
     
     var project = $("#project").val();
@@ -207,10 +292,11 @@ function validateLead()
     var sel_shift = $("#sel_shift").val();
     var shiftdate = $("#shiftdate").val();
     var sel_excavator = $("#sel_excavator").val();
-    var material_type = $("#material_type").val();
-    var lead = $("#lead").val();
-    var rl_in_face = $("#rl_in_face").val();
-    var rl_in_dump = $("#rl_in_dump").val();
+   
+    var material_type = $("#material_type_"+rowDtlNo).val();
+    var lead = $("#lead_"+rowDtlNo).val();
+    var rl_in_face = $("#rl_in_face_"+rowDtlNo).val();
+    var rl_in_dump = $("#rl_in_dump_"+rowDtlNo).val();
 
     
 
@@ -270,13 +356,61 @@ function validateLead()
 
     if(material_type=="0")
     {
-        $("#material_type").focus();
+        $("#material_type_"+rowDtlNo).focus();
         $("#error_msg")
         .text("Error : Select Carrying")
         .addClass("form_error")
         .css("display", "block");
         return false;
     }
+
+    if(lead=="")
+    {
+        $("#lead_"+rowDtlNo).focus();
+        $("#error_msg")
+        .text("Error : Enter Lead")
+        .addClass("form_error")
+        .css("display", "block");
+        return false;
+    }
+
+   if(rl_in_face=="")
+    {
+        $("#rl_in_face_"+rowDtlNo).focus();
+        $("#error_msg")
+        .text("Error : Enter Rl In Face")
+        .addClass("form_error")
+        .css("display", "block");
+        return false;
+    }
+
+    if(rl_in_dump=="")
+    {
+        $("#rl_in_dump_"+rowDtlNo).focus();
+        $("#error_msg")
+        .text("Error : Enter Rl In Dump")
+        .addClass("form_error")
+        .css("display", "block");
+        return false;
+    }
+
+	return true;
+}
+
+
+function validateUpdateLead()
+{
+    
+
+    var lead = $("#lead").val();
+    var rl_in_face = $("#rl_in_face").val();
+    var rl_in_dump = $("#rl_in_dump").val();
+
+    
+
+    $("#error_msg").text("").css("dispaly", "none").removeClass("form_error");
+
+
 
     if(lead=="")
     {
@@ -308,7 +442,7 @@ function validateLead()
         return false;
     }
 
-	return true;
+    return true;
 }
 
 
@@ -433,7 +567,8 @@ function getMaterial(basepath){
     data: {project:project},
     
     success: function(data){
-        $("#material_dropdown").html(data);
+      //  $("#material_dropdown").html(data);
+        $("#material_details_data").html(data);
       
         $('.selectpicker').selectpicker();
     },
@@ -462,3 +597,20 @@ function getMaterial(basepath){
     });/*end ajax call*/
 
 }
+
+
+  function checkEditOption(){
+      var listshiftdate = $("#listshiftdate").val();
+      var currentdate = $("#currentdate").val();
+       $(".editLeadAgnVehicle").css('display', 'none');
+        console.log(listshiftdate);
+        console.log(currentdate);
+
+      if(listshiftdate==currentdate){
+        console.log('same');
+          $(".editLeadAgnVehicle").css('display', 'block');
+      }else{
+           console.log('not same');
+             $(".editLeadAgnVehicle").css('display', 'none');
+      }
+  }

@@ -34,6 +34,7 @@ vertical-align: inherit;
                   <th style="width:5%;">Sl</th>
                   <th style="width:10%;">Action</th>
                   <th>Material </th>
+                  <th>Unit </th>
                   <th>Status</th> 
                
                 </tr>
@@ -68,6 +69,7 @@ vertical-align: inherit;
                         </td>
             
                         <td><?php echo $value->material; ?></td>                                              
+                        <td><?php echo $value->unit; ?></td>                                              
                         <td><?php echo $status; ?></td>                            
                        
                     </tr>              			

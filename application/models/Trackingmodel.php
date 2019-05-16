@@ -244,7 +244,7 @@ class Trackingmodel extends CI_Model{
 
 
         $where = array(
-            'lead_against_vehicle.shift_date' =>date("Y-m-d",strtotime($shift_code)),
+            'lead_against_vehicle.shift_date' =>date("Y-m-d",strtotime($shift_date)),
             'lead_against_vehicle.shift_code' =>$shift_code,
             'lead_against_vehicle.vehicle_mst_id' =>$vehicle_mst_id,
             'lead_against_vehicle.project_material_id' =>$project_material_id,

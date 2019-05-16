@@ -2,11 +2,18 @@
 
 class Lead_model extends CI_Model{
 	
-	public function getLeadAgainstVehicleList($today)
+	public function getLeadAgainstVehicleList($today,$project)
     {
         
-
-        $where = array('lead_against_vehicle.shift_date' =>$today);
+        if ($project==0) {
+          $where = array('lead_against_vehicle.shift_date' =>$today);
+        }else{
+            $where = array(
+                            'lead_against_vehicle.shift_date' =>$today,
+                            'lead_against_vehicle.project_id' =>$project
+                        ); 
+        }
+       
         $data = array();
         $query=$this->db->select(
                                 'lead_against_vehicle.*,
