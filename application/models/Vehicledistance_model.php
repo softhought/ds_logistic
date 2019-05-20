@@ -281,5 +281,139 @@ class Vehicledistance_model extends CI_Model{
     }
 
 
+    public function getVehicleDistanceReport($shiftdate,$projectid,$vehicletype)
+    {
+      $data=[];
+
+      $where = array(
+                        'vehicle_distance_master.project_id' => $projectid,
+                        'vehicle_distance_master.shift_date' => $shiftdate,
+                        'vehicle_distance_master.vehicle_type_id' => $vehicletype
+                        
+                      
+       );
+
+      $query=$this->db->select('
+                                vehicle_distance_master.*,
+                                vehicle_master.equipment_id,
+                                vehicle_master.equipment_name,
+                                ')
+                        ->from('vehicle_distance_master')
+                        ->join('vehicle_distance_details','vehicle_distance_details.distance_master_id=vehicle_distance_master.vehicle_distance_id','INNER')
+                         ->join('vehicle_master','vehicle_master.equipment_id=vehicle_distance_details.equipment_id','INNER')
+                        ->where($where)
+                        ->order_by('vehicle_master.equipment_name', 'asc')
+                        ->group_by("vehicle_master.vehicle_id")
+                        
+                        ->get();
+                         #q();
+
+      if($query->num_rows()>0){
+        foreach ($query->result() as $rows)
+        {
+           
+               // $data[] = $rows;
+
+                $data[]=[
+                  "distanceMasterData"=>$rows,
+                  "shiftType"=>$this->getShiftType($shiftdate,$projectid,$vehicletype,$rows->equipment_id)
+                ];
+            
+        }
+        return $data;
+      }
+      else
+      {
+        return $data;
+      }
+    }
+
+
+
+   public function getShiftType($shiftdate,$projectid,$vehicletype,$equipment_id)
+    {
+      $data=[];
+
+      $where = array(
+                      'shift_master.is_active' => 'Y',
+                      
+                     );
+
+      $query=$this->db->select('*')
+                        ->from('shift_master')
+                        ->where($where)
+                        ->get();
+                        #q();
+
+      if($query->num_rows()>0){
+        foreach ($query->result() as $rows)
+        {
+           
+             //   $data[] = $rows;
+
+             
+
+                       $data[]=[
+                        "shiftData"=>$rows,
+                        "distanceDetails"=>$this->getDistanceDetails($shiftdate,$projectid,$vehicletype,$rows->shift_code,$equipment_id)
+                      ];
+
+              
+           
+        }
+        return $data;
+      }
+      else
+      {
+        return $data;
+      }
+    }
+
+
+    public function getDistanceDetails($shiftdate,$project,$vehicle_type,$shift_code,$equipment_id)
+    {
+      $data=[];
+
+         $where = array(
+                                    'vehicle_distance_master.project_id' =>  $project, 
+                                    'vehicle_distance_master.vehicle_type_id' =>  $vehicle_type, 
+                                    'vehicle_distance_master.shift_date' =>  $shiftdate, 
+                                    'vehicle_distance_master.shift_code' =>  $shift_code, 
+                                    'vehicle_distance_details.equipment_id' =>  $equipment_id, 
+                                  );
+
+      $query=$this->db->select('
+                                vehicle_distance_details.start_km,
+                                vehicle_distance_details.start_time,
+                                vehicle_distance_details.end_km,
+                                vehicle_distance_details.end_time
+                                ')
+                        ->from('vehicle_distance_master')
+                        ->where($where)
+                        ->join('vehicle_distance_details','vehicle_distance_details.distance_master_id=vehicle_distance_master.vehicle_distance_id','INNER')
+                        ->limit(1)
+                        ->get();
+
+                        if ($equipment_id=='12345') {
+                        //   q();
+                        }
+                       
+
+        if($query->num_rows()> 0)
+        {
+               $row = $query->row();
+               return $data = $row;
+                 
+            }
+        else
+        {
+                return $data;
+            }
+    
+
+
+    }
+
+
 	
 }// end of class

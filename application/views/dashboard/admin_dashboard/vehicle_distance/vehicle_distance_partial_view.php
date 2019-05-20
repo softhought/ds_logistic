@@ -51,10 +51,10 @@ color: gray;
                 <tr>
                  <th>Sl</th> 
                  <th>Vehicle</th> 
-                 <th>Start Km</th> 
-                 <th>Start Hour</th> 
-                 <th>End Km</th> 
-                 <th>End Hour</th>
+                 <th>Opening Km</th> 
+                 <th>Opening Hour</th> 
+                 <th>Closing Km</th> 
+                 <th>Closing Hour</th>
                 
                 </tr>
                 </thead>
@@ -83,16 +83,16 @@ color: gray;
               <input type="hidden" name="equipment_id[]" id="equipment_id_<?php echo $row;?>" value="<?php echo $value->equipment_id; ?>" readonly>
 
               <input class="<?php echo $startinput?>" type="text" name="start_km[]" id="start_km_<?php echo $row;?>" onKeyUp="numericFilter(this);" autocomplete="off" value="<?php if($mode=="EDIT"){echo $value->start_km;}else{echo '';}?>" <?php echo $startinput?> >  </td>
-            <td><input type="text" class="timepicker" name="start_hour[]" id="start_hour_<?php echo $row;?>" autocomplete="off" readonly value="<?php if($mode=="EDIT"){echo $value->start_time;}else{echo '';}?>">
-                &nbsp;<i class="glyphicon glyphicon-remove-circle reset"  onclick="return resetInput('start_hour_',<?php echo $row;?>)"></i>
+            <td><input type="text"  name="start_hour[]" id="start_hour_<?php echo $row;?>" autocomplete="off"  value="<?php if($mode=="EDIT"){echo $value->start_time;}else{echo '';}?>" onKeyUp="numericFilter(this);">
+                &nbsp;<!-- <i class="glyphicon glyphicon-remove-circle reset"  onclick="return resetInput('start_hour_',<?php echo $row;?>)"></i> -->
 
               <!--  <input type="text" class=" timepicker" id="end_time" name="end_time" placeholder="End Time" autocomplete="off" value="" > -->
 
 
             </td>
             <td><input type="text" name="end_km[]" id="end_km_<?php echo $row;?>" onKeyUp="numericFilter(this);" autocomplete="off" value="<?php if($mode=="EDIT"){echo $value->end_km;}else{echo '';}?>"></td>
-            <td><input type="text" class="timepicker" name="end_hour[]" id="end_hour_<?php echo $row;?>" autocomplete="off" readonly value="<?php if($mode=="EDIT"){echo $value->end_time;}else{echo '';}?>">
-              &nbsp;<i class="glyphicon glyphicon-remove-circle reset"  onclick="return resetInput('end_hour_',<?php echo $row;?>)"></i>
+            <td><input type="text"  name="end_hour[]" id="end_hour_<?php echo $row;?>" autocomplete="off"  value="<?php if($mode=="EDIT"){echo $value->end_time;}else{echo '';}?>" onKeyUp="numericFilter(this);">
+              &nbsp;<!-- <i class="glyphicon glyphicon-remove-circle reset"  onclick="return resetInput('end_hour_',<?php echo $row;?>)"></i> -->
             </td>
            
                        

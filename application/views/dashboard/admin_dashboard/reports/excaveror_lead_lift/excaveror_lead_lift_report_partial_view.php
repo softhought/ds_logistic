@@ -21,10 +21,10 @@ vertical-align: inherit;
 <div class="datatalberes" style="overflow-x:auto;">
 
 
-<table id="reporttable" class="table table-bordered table-striped dataTables" style="border-collapse: collapse !important;">
+<table id="reporttable" class=" dataTables" style="border-collapse: collapse !important;">
                 <thead> 
                 <tr>
-                 <!--  <th rowspan="1" colspan="5" style="text-align:center;"><?php echo $tripReportProject; ?></th> -->
+                  <th  colspan="7" style="text-align:center;"><?php echo $tripReportProject; ?></th>
                 </tr>              
                 <tr>
                   

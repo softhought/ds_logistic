@@ -297,9 +297,9 @@ public function getObserverByProject()
 
                          $_upd_dist_vehicle_dtl = array( 
                                                     'start_km' => $start_km[$i],
-                                                    'start_time' => $this->checkEmpty($start_hour[$i]),
+                                                    'start_time' => $start_hour[$i],
                                                     'end_km' => $end_km[$i], 
-                                                    'end_time' => $this->checkEmpty($end_hour[$i]), 
+                                                    'end_time' => $end_hour[$i], 
                                                    );
                           /* update vehicle distance details */
                        $update=$this->vehicledistance->updateVehicleDistancrDetails($_upd_dist_vehicle_dtl,$distance_details_id[$i]);
@@ -313,9 +313,9 @@ public function getObserverByProject()
                                                     'shift_date' => $shiftdate, 
                                                     'shift_code' => $shift_code, 
                                                     'start_km' => $start_km[$i],
-                                                    'start_time' => $this->checkEmpty($start_hour[$i]), 
+                                                    'start_time' => $start_hour[$i], 
                                                     'end_km' => $end_km[$i], 
-                                                    'end_time' => $this->checkEmpty($end_hour[$i]), 
+                                                    'end_time' => $end_hour[$i], 
                                                     'entry_date' => date('Y-m-d H:i'), 
                                                    );
 
@@ -392,9 +392,9 @@ public function getObserverByProject()
                                                     'shift_date' => $shiftdate, 
                                                     'shift_code' => $shift_code, 
                                                     'start_km' => $start_km[$i], 
-                                                    'start_time' => $this->checkEmpty($start_hour[$i]),
+                                                    'start_time' => $start_hour[$i],
                                                     'end_km' => $end_km[$i], 
-                                                    'end_time' => $this->checkEmpty($end_hour[$i]), 
+                                                    'end_time' => $end_hour[$i], 
                                                    );
                           /* insert into vehicle distance details */
                          $insert_dtl_id=$this->commondatamodel->insertSingleTableData('vehicle_distance_details',$dist_vehicle_dtl);
@@ -408,9 +408,9 @@ public function getObserverByProject()
                                                     'shift_date' => $shiftdate, 
                                                     'shift_code' => $shift_code, 
                                                     'start_km' => $start_km[$i], 
-                                                    'start_time' => $this->checkEmpty($start_hour[$i]),
+                                                    'start_time' => $start_hour[$i],
                                                     'end_km' => $end_km[$i], 
-                                                    'end_time' => $this->checkEmpty($end_hour[$i]),
+                                                    'end_time' => $end_hour[$i],
                                                     'entry_date' => date('Y-m-d H:i'), 
                                                    );
 
@@ -491,13 +491,95 @@ function checkEmpty($val){
         $session = $this->session->userdata('user_data');
         if($this->session->userdata('user_data'))
         {   $result = [];            
-            $page = 'dashboard/admin_dashboard/reports/dump_report/tipper_dump_report';
+            $page = 'dashboard/admin_dashboard/reports/vehicle_distance/vehicle_distance_report_view';
             $result['projectList'] = $this->commondatamodel->getAllDropdownData("project_master");
-           // $result['trackingList']=$this->trackingmodel->getTrackingDetailsList();
+          
+            $result['vehicleType'] = $this->commondatamodel->getAllDropdownData("vehicle_type");
           
             $header = "";
            
             createbody_method($result, $page, $header, $session);
+        }
+        else{
+            redirect('login','refresh');
+        }
+    }
+
+
+
+
+       /* vehicle Distance Report Data by project and shift date */   
+    public function vehicleDistanceReportData()
+    {
+        $session = $this->session->userdata('user_data');
+        if($this->session->userdata('user_data'))
+        { 
+            $result =[];
+            $shiftdate=$this->input->post('shiftdate');
+           
+
+            if($shiftdate!=""){
+                $shiftdate = str_replace('/', '-', $shiftdate);
+                $shiftdate = date("Y-m-d",strtotime($shiftdate));
+             
+             }
+             else{
+                 $shiftdate = NULL;
+               
+             }
+
+
+ 
+           $project=$this->input->post('sel_project');
+           $vehicle_type=$this->input->post('vehicle_type');
+           $reoprtType='Distance';
+           $where_type = array('vehicle_type.vehicle_type_id' => $vehicle_type);
+
+            $vehicleTypeData=$this->commondatamodel->getSingleRowByWhereCls('vehicle_type',$where_type);
+
+            $result['vehicle'] = $vehicleTypeData->vehicle_type;
+           
+
+             $result['shiftList'] = $this->commondatamodel->getAllDropdownData("shift_master");
+            $result['distanceReport']=$this->vehicledistance->getVehicleDistanceReport($shiftdate,$project,$vehicle_type);
+           
+
+           // pre($result['distanceReport']);
+
+            // foreach ($result['distanceReport'] as $key => $value) {
+              
+            //     echo $value['distanceMasterData']->equipment_name;
+            //     foreach ($value['shiftType'] as $shifttype) {
+                  
+            //      pre($shifttype);
+                 
+                 
+            //     }
+
+            // }
+
+            // exit;
+           
+
+
+            $result['shift']=$this->commondatamodel->getAllDropdownData('shift_master');
+            
+            if ($project!=0) {
+                $where=[
+                    "project_id"=>$project
+                ];
+                $projectName=$this->commondatamodel->getSingleRowByWhereCls('project_master',$where);
+               $result['distanceReportProject']="Vehicle Distance Report For ".$projectName->project_nickname;
+            }else {
+                $result['distanceReportProject']="Vehicle Distance Report";
+            }
+           
+    
+            $page = 'dashboard/admin_dashboard/reports/vehicle_distance/vehicle_distance_report_partial_view';
+           
+           
+            $display = $this->load->view($page,$result,TRUE);
+            echo $display;
         }
         else{
             redirect('login','refresh');

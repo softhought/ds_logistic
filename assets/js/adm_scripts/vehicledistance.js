@@ -156,6 +156,76 @@ $(document ).ready(function() {
 
 
 
+/*=====================================================================================*/
+/*---------------------- vehicle distance report project wise  -----------------------*/
+/*---------------------------- 16.05.2019 by Shankha  -------------------------------*/
+/*==================================================================================*/
+
+    $('#vehicledistanceReportBtn').on('click',function(e){
+        e.preventDefault();
+
+        if(1)
+        {
+            $('#loader').show();
+            var formDataserialize = $("#VehicleDistanceReport").serialize();
+            var urlpath = basepath + 'vehicledistance/vehicleDistanceReportData';
+
+            $.ajax({        
+                type: "POST",
+                url: urlpath,
+                data:formDataserialize,
+                dataType: "html",            
+                success: function(result) {
+                    $('#loader').hide();  
+                    $("#distancereportView").html(result);
+
+                var distanceReportProject = $("#distanceReportProject").val();
+
+                    $('#DistanceReportData').DataTable({
+                        "dom": 'Bfrtip',
+                         "ordering": false,
+                        // "buttons": [
+                        //     'csv', 'excel', 'pdf', 'print'
+                        // ]
+                        buttons: [{
+                            extend: 'pdf',
+                            title: distanceReportProject
+                          }, {
+                            extend: 'excel',
+                            title: distanceReportProject
+                          }, {
+                            extend: 'csv'
+                          },{
+                            extend: 'print',
+                            title: distanceReportProject
+                          }]
+                    });
+                },
+                error: function(jqXHR, exception) {
+                    var msg = '';
+                    if (jqXHR.status === 0) {
+                        msg = 'Not connect.\n Verify Network.';
+                    } else if (jqXHR.status == 404) {
+                        msg = 'Requested page not found. [404]';
+                    } else if (jqXHR.status == 500) {
+                        msg = 'Internal Server Error [500].';
+                    } else if (exception === 'parsererror') {
+                        msg = 'Requested JSON parse failed.';
+                    } else if (exception === 'timeout') {
+                        msg = 'Time out error.';
+                    } else if (exception === 'abort') {
+                        msg = 'Ajax request aborted.';
+                    } else {
+                        msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                    }
+                    // alert(msg);  
+                }
+            });
+        }        
+    });
+
+
+
 
 
 

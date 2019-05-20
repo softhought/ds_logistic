@@ -221,6 +221,8 @@ class Trackingmodel extends CI_Model{
                          ->join('driver_master','driver_master.driver_code=excavator_assign.driver_code','INNER')
                          ->join('supervisor_master','supervisor_master.supervisor_id=excavator_assign.supervisor_id','INNER')
                          ->where($where)
+                         ->group_by("excavator_assign.equipment_id")
+                         ->group_by("excavator_assign.mobile_id")
                          ->get();
                        // echo $this->db->last_query();
         if($query->num_rows()> 0)
