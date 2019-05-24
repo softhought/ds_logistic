@@ -141,9 +141,9 @@ vertical-align: inherit;
 
                                           }
                           ?>
-                        <td><?php echo $lead;?></td>
-                        <td><?php echo $rl_in_face;?></td>
-                        <td><?php echo $rl_in_dump;?></td>
+                        <td style="text-align: right;"><?php echo $lead;?></td>
+                        <td style="text-align: right;"><?php echo $rl_in_face;?></td>
+                        <td style="text-align: right;"><?php echo $rl_in_dump;?></td>
                         
 				    </tr>              			
               	<?php

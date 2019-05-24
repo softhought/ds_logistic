@@ -13,7 +13,9 @@ class Vehicledistance_model extends CI_Model{
                                     vehicle_distance_details.start_km,
                                     vehicle_distance_details.start_time,
                                     vehicle_distance_details.end_km,
-                                    vehicle_distance_details.end_time
+                                    vehicle_distance_details.end_time,
+                                    vehicle_distance_details.km_differ,
+                                    vehicle_distance_details.time_differ
                                 ')
                         ->from('vehicle_distance_details')
                         ->join('vehicle_master','vehicle_master.equipment_id=vehicle_distance_details.equipment_id','INNER')
@@ -113,7 +115,8 @@ class Vehicledistance_model extends CI_Model{
 
                  $data[]=[
                   "vihicleData"=>$rows,
-                  "lastDistance"=>$this->lastDistanceVehicle($vehicle_distance_mstid,$rows->equipment_id)
+                  "lastDistance"=>$this->lastDistanceVehicle($vehicle_distance_mstid,$rows->equipment_id),
+                  "lastHour"=>$this->lastHourVehicle($vehicle_distance_mstid,$rows->equipment_id)
                  
                   
                 ];
@@ -148,6 +151,41 @@ class Vehicledistance_model extends CI_Model{
                         return $lastdistance;
                     }else{
                         return $lastdistance;
+                    }
+
+               
+         }
+
+       
+    }
+
+
+    /* last hour */
+
+
+      function lastHourVehicle($vehicle_distance_mstid,$equipment_id){
+         $lasthour=0;
+         $vehi_hour_arr = array(
+                                'distance_master_id' => $vehicle_distance_mstid,
+                                'equipment_id' => $equipment_id,
+                                 );
+       
+         $vehicleHourData = $this->commondatamodel->getSingleRowByWhereCls('vehicle_distance_details',$vehi_hour_arr);
+
+         if ($vehicleHourData) {
+          
+            $lasthour=$vehicleHourData->end_time;
+            return $lasthour;
+        
+         }else{
+
+                    $vehicleLastDistanceData=$this->getVehicleLastDistance($equipment_id);
+
+                    if ($vehicleLastDistanceData) {
+                        $lasthour=$vehicleLastDistanceData->end_time;
+                        return $lasthour;
+                    }else{
+                        return $lasthour;
                     }
 
                
@@ -220,7 +258,7 @@ class Vehicledistance_model extends CI_Model{
                $check_array = array(
                               'project_id' =>  $project, 
                               'vehicle_type_id' =>  $vehicle_type, 
-                              'shift_date' =>  $next_shiftdate,  
+                              'shift_date >' =>  $next_shiftdate,  
                               );
 
                $checkdata=$this->commondatamodel->getSingleRowByWhereCls('vehicle_distance_master',$check_array);
@@ -383,10 +421,13 @@ class Vehicledistance_model extends CI_Model{
                                   );
 
       $query=$this->db->select('
+                                vehicle_distance_details.distance_details_id,
                                 vehicle_distance_details.start_km,
                                 vehicle_distance_details.start_time,
                                 vehicle_distance_details.end_km,
-                                vehicle_distance_details.end_time
+                                vehicle_distance_details.end_time,
+                                vehicle_distance_details.km_differ,
+                                vehicle_distance_details.time_differ
                                 ')
                         ->from('vehicle_distance_master')
                         ->where($where)
@@ -394,9 +435,9 @@ class Vehicledistance_model extends CI_Model{
                         ->limit(1)
                         ->get();
 
-                        if ($equipment_id=='12345') {
-                        //   q();
-                        }
+                        
+
+                      
                        
 
         if($query->num_rows()> 0)

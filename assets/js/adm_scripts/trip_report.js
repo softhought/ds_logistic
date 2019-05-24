@@ -22,7 +22,7 @@ $(document).ready(function() {
 
                 var tripReportProject = $("#tripReportProject").val();
 
-                    $('#TripReportData').DataTable({
+                   /* $('#TripReportData').DataTable({
                         "dom": 'Bfrtip',
 
                         // "buttons": [
@@ -40,7 +40,7 @@ $(document).ready(function() {
                             extend: 'print',
                             title: tripReportProject
                           }]
-                    });
+                    }); */
                 },
                 error: function(jqXHR, exception) {
                     var msg = '';
@@ -66,6 +66,14 @@ $(document).ready(function() {
     });
 
 
+          $(document).on('click','#TripReportdownloadxls',function(){
+
+          $('#TripReportData').tableExport({type:'excel',escape:'false'});
+      
+        
+    });
+
+
 /*=====================================================================================*/
 /*--------------------------Quantity report shift wise  ------------------------------*/
 /*---------------------------- 29.04.2019 by Shankha  -------------------------------*/
@@ -80,7 +88,6 @@ $(document).ready(function() {
             var formDataserialize = $("#QuantityReportForm").serialize();
             var urlpath = basepath + 'Tripreport/quantityReport';
 
-
             $.ajax({        
                 type: "POST",
                 url: urlpath,
@@ -92,61 +99,24 @@ $(document).ready(function() {
 
                 var QuantityReportProject = $("#tripReportProject").val();
 
-                    $('#TripReportData').DataTable({
+                 /*   $('#TripReportData').DataTable({
                         "dom": 'Bfrtip',
                         // "buttons": [
                         //     'csv', 'excel', 'pdf', 'print'
                         // ]
-                        // buttons: [{
-                        //     extend: 'pdf',
-                        //     title: QuantityReportProject
-                        //   }, {
-                        //     extend: 'excel',
-                        //     title: QuantityReportProject
-                        //   }, {
-                        //     extend: 'csv'
-                        //   },{
-                        //     extend: 'print',
-                        //     title: QuantityReportProject
-                        //   }],
-
-                 "buttons": [{
-                    "extend": 'excel',
-
-                    "header":false,
-                    customize: function ( xlsx ) {
-                        var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                        //Bold Header Row
-                        $('row[r=3] c', sheet).attr( 's', '2' );
-                        //Make You Input Cells Bold Too
-                        $('c[r=A1]', sheet).attr( 's', '2' );
-                        $('c[r=A2]', sheet).attr( 's', '2' );
-                    },
-
-                      customizeData: function(data){
-                   
-                    var desc = [
-                        ['ID','TEST ID'],
-                        ['Report Date',' TEST Report Date']
-                    ];
-                    data.body.unshift(data.header);
-                    for (var i = 0; i < desc.length; i++) {
-                        data.body.unshift(desc[i]);
-                    };
-                }
-
-                  
-                   
-                    
-                  
- 
- 
-                        }]
-
-
-
- 
-                    });
+                        buttons: [{
+                            extend: 'pdf',
+                            title: QuantityReportProject
+                          }, {
+                            extend: 'excel',
+                            title: QuantityReportProject
+                          }, {
+                            extend: 'csv'
+                          },{
+                            extend: 'print',
+                            title: QuantityReportProject
+                          }]
+                    }); */
                 },
                 error: function(jqXHR, exception) {
                     var msg = '';
@@ -198,7 +168,7 @@ $(document).ready(function() {
 
                 var Project = $("#tripReportProject").val();
 
-                    $('#excavatorreport').DataTable({
+                 /*   $('#excavatorreport').DataTable({
                         "dom": 'Bfrtip',
                          "paging": false,
                          "autoWidth": true,
@@ -221,7 +191,7 @@ $(document).ready(function() {
                             extend: 'print',
                             title: Project
                           }]
-                    });
+                    }); */
                 },
                 error: function(jqXHR, exception) {
                     var msg = '';
@@ -244,6 +214,14 @@ $(document).ready(function() {
                 }
             });
         }        
+    });
+
+
+       $(document).on('click','#excavatorreportxls',function(){
+
+          $('#excavatorreport').tableExport({type:'excel',escape:'false'});
+      
+        
     });
 
 
@@ -275,7 +253,7 @@ $(document).ready(function() {
 
                 var Project = $("#tripReportProject").val();
 
-                    $('#excavatorreport').DataTable({
+                 /*   $('#excavatorreport').DataTable({
                         "dom": 'Bfrtip',
                          "paging": false,
                          "autoWidth": true,
@@ -298,7 +276,7 @@ $(document).ready(function() {
                             extend: 'print',
                             title: Project
                           }]
-                    });
+                    });*/
                 },
                 error: function(jqXHR, exception) {
                     var msg = '';
@@ -351,7 +329,7 @@ $(document).ready(function() {
 
                 var Project = $("#tripReportProject").val();
 
-                    $('#tipperreport').DataTable({
+                 /*   $('#tipperreport').DataTable({
                         "dom": 'Bfrtip',
                          "paging": false,
                          "autoWidth": true,
@@ -374,7 +352,7 @@ $(document).ready(function() {
                             extend: 'print',
                             title: Project
                           }]
-                    });
+                    }); */
                 },
                 error: function(jqXHR, exception) {
                     var msg = '';
@@ -397,6 +375,14 @@ $(document).ready(function() {
                 }
             });
         }        
+    });
+
+
+       $(document).on('click','#downloadxls',function(){
+
+          $('#tipperreport').tableExport({type:'excel',escape:'false'});
+      
+        
     });
 
 
@@ -429,7 +415,7 @@ $(document).ready(function() {
 
                 var Project = $("#tripReportProject").val();
 
-                    $('#tipperreport').DataTable({
+                /*    $('#tipperreport').DataTable({
                         "dom": 'Bfrtip',
                          "paging": false,
                          "autoWidth": true,
@@ -452,7 +438,7 @@ $(document).ready(function() {
                             extend: 'print',
                             title: Project
                           }]
-                    });
+                    }); */
                 },
                 error: function(jqXHR, exception) {
                     var msg = '';
@@ -679,50 +665,3 @@ function validateTripperQtyRep()
     }    
     return true;
 }
-
-
-  var _customizeExcelOptions = function (xlsx) {
-                var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                var numrows = 3;
-                var clR = $('row', sheet);
-
-                //update Row
-                clR.each(function () {
-                    var attr = $(this).attr('r');
-                    var ind = parseInt(attr);
-                    ind = ind + numrows;
-                    $(this).attr("r",ind);
-                });
-
-                // Create row before data
-                $('row c ', sheet).each(function () {
-                    var attr = $(this).attr('r');
-                    var pre = attr.substring(0, 1);
-                    var ind = parseInt(attr.substring(1, attr.length));
-                    ind = ind + numrows;
-                    $(this).attr("r", pre + ind);
-                });
-
-                function Addrow(index,data) {
-                    msg='<row r="'+index+'">'
-                    for(i=0;i<data.length;i++){
-                        var key=data[i].key;
-                        var value=data[i].value;
-                        msg += '<c t="inlineStr" r="' + key + index + '">';
-                        msg += '<is>';
-                        msg +=  '<t>'+value+'</t>';
-                        msg+=  '</is>';
-                        msg+='</c>';
-                    }
-                    msg += '</row>';
-                    return msg;
-                }
-
-
-                //insert
-                var r1 = Addrow(1, [{ key: 'A', value: '' }, { key: 'B', value: '' }]);
-                var r2 = Addrow(2, [{ key: 'A', value: '' }, { key: 'B', value: '' }]);
-                var r3 = Addrow(3, [{ key: 'A', value: '' }, { key: 'B', value: '' }]);
-
-                sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2+ r3+ sheet.childNodes[0].childNodes[1].innerHTML;
-            }

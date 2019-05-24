@@ -1,4 +1,6 @@
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/adm_scripts/delayreport.js"></script>
+  <script src="<?php echo base_url(); ?>assets/js/tableExport.js"></script>  
+<script src="<?php echo base_url(); ?>assets/js/jquery.base64.js"></script>  
 <style>
 
 .excavatorerror{
@@ -9,6 +11,14 @@
 .readonly{
   background-color: #f2e8dc;
 }
+
+.projectHeading{
+  text-align: center;
+  font-weight: bold;
+  background-color: #0e8ac5!important;
+  color: #FFF !important;
+}
+
 </style>
    <section class="content-header">
       <h1>

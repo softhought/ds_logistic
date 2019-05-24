@@ -33,7 +33,7 @@
               <div class="row" style="margin: 2% auto;margin-bottom: 0;">
                   <div class="col-md-offset-4 col-md-2">
                         <div class="form-group">
-                            <label>From Date</label>
+                            <label>Date</label>
                             <div class="input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
                                 <input type="text" class="form-control" name="fromDate" id="fromDate" value="<?php echo date("d/m/Y"); ?>" readonly >
                                 <div class="input-group-addon">
@@ -46,27 +46,6 @@
                  
                   <div class="col-md-2">
                         <div class="form-group">
-                          <label>To Date</label>
-                          <div class="input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
-                                <input type="text" class="form-control" name="toDate" id="toDate" value="<?php echo date("d/m/Y"); ?>" readonly >
-                                <div class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                                </div>
-                            </div>
-                          <!-- /.input group -->
-                        </div>
-                  </div> <!-- /.col-md-4 END -->
-           
-                 
-               
-                
-              </div>
-
-
-              <div class="row" style="margin-bottom: 0;">
-                    
-                    <div class="col-md-offset-4 col-md-4">
-                    <div class="form-group">
                             <label for="project">Project</label> 
                             <select id="project" name="project" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
                               <option value="0">Select</option>
@@ -81,10 +60,14 @@
                                 ?>
                             </select>
                           </div>
-                    </div> <!-- /.col-md-4 END -->
+                  </div> <!-- /.col-md-4 END -->
+           
+                 
+               
+                
+              </div>
 
- 
-                    </div> <!-- row end-->
+
 
 
                         <div class="row" style="margin-left: 0;margin-right: 15px;">

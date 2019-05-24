@@ -14,15 +14,19 @@ class Delayreport_model extends CI_Model{
         $query=$this->db->select('
         							vehicle_master.equipment_name,
 									vehicle_master.equipment_id,
-									project_master.project_nickname
+									project_master.project_nickname,
+                                    driver_tracking_history.shift_code
                                 ')
                         ->from('driver_tracking_history')
                         ->where($where)
                         ->join('vehicle_master','vehicle_master.equipment_id=driver_tracking_history.tipper_equipment_id','INNER')
                         ->join('project_master','project_master.project_id=vehicle_master.project_id','INNER')
                         ->order_by('vehicle_master.vehicle_id', 'asc')
+                        ->order_by('driver_tracking_history.shift_code', 'asc')
                         ->group_by('vehicle_master.equipment_name')
+                        ->group_by('driver_tracking_history.shift_code')
                         ->get();
+                        #q();
         if($query->num_rows()> 0)
         {
             foreach ($query->result() as $rows)
@@ -31,8 +35,8 @@ class Delayreport_model extends CI_Model{
 
                  $data[]=[
                   "tipperData"=>$rows,
-                  "startIdelTime"=>$this->getTipperFirstTripStart($shift_date,$project,$rows->equipment_id),
-                  "endIdelTime"=>$this->getTipperLastTripEnd($shift_date,$project,$rows->equipment_id)
+                  "startIdelTime"=>$this->getTipperFirstTripStart($shift_date,$project,$rows->equipment_id,$rows->shift_code),
+                  "endIdelTime"=>$this->getTipperLastTripEnd($shift_date,$project,$rows->equipment_id,$rows->shift_code)
                  
                   
                 ];
@@ -45,12 +49,13 @@ class Delayreport_model extends CI_Model{
 
 
 
-    public function getTipperFirstTripStart($shift_date,$project,$equipment_id)
+    public function getTipperFirstTripStart($shift_date,$project,$equipment_id,$shift_code)
 	{
 			$where = array(
                             'vehicle_master.project_id' => $project, 
                             'driver_tracking_history.shift_date' => $shift_date,
-                            'driver_tracking_history.tipper_equipment_id' => $equipment_id
+                            'driver_tracking_history.tipper_equipment_id' => $equipment_id,
+                            'driver_tracking_history.shift_code' => $shift_code
                                
                                                  
                                 ); 
@@ -84,12 +89,13 @@ class Delayreport_model extends CI_Model{
         }
 	}
 
-	public function getTipperLastTripEnd($shift_date,$project,$equipment_id)
+	public function getTipperLastTripEnd($shift_date,$project,$equipment_id,$shift_code)
 	{
 			$where = array(
                             'vehicle_master.project_id' => $project, 
                             'driver_tracking_history.shift_date' => $shift_date,
-                            'driver_tracking_history.tipper_equipment_id' => $equipment_id
+                            'driver_tracking_history.tipper_equipment_id' => $equipment_id,
+                            'driver_tracking_history.shift_code' => $shift_code
                                
                                                  
                                 ); 
@@ -138,7 +144,8 @@ class Delayreport_model extends CI_Model{
         $query=$this->db->select('
         							vehicle_master.equipment_name,
 									vehicle_master.equipment_id,
-									project_master.project_nickname
+									project_master.project_nickname,
+                                    driver_tracking_history.shift_code
                                 ')
                         ->from('driver_tracking_history')
                         ->where($where)
@@ -146,6 +153,7 @@ class Delayreport_model extends CI_Model{
                         ->join('project_master','project_master.project_id=vehicle_master.project_id','INNER')
                         ->order_by('vehicle_master.vehicle_id', 'asc')
                         ->group_by('vehicle_master.equipment_name')
+                        ->group_by('driver_tracking_history.shift_code')
                         ->get();
         if($query->num_rows()> 0)
         {
@@ -155,8 +163,8 @@ class Delayreport_model extends CI_Model{
 
                  $data[]=[
                   "excavatorData"=>$rows,
-                  "startIdelTime"=>$this->getExcavatorFirstTripStart($shift_date,$project,$rows->equipment_id),
-                  "endIdelTime"=>$this->getExcavatorLastTripEnd($shift_date,$project,$rows->equipment_id)
+                  "startIdelTime"=>$this->getExcavatorFirstTripStart($shift_date,$project,$rows->equipment_id,$rows->shift_code),
+                  "endIdelTime"=>$this->getExcavatorLastTripEnd($shift_date,$project,$rows->equipment_id,$rows->shift_code)
                  
                   
                 ];
@@ -168,12 +176,13 @@ class Delayreport_model extends CI_Model{
     }
 
 
-     public function getExcavatorFirstTripStart($shift_date,$project,$equipment_id)
+     public function getExcavatorFirstTripStart($shift_date,$project,$equipment_id,$shift_code)
 	{
 			$where = array(
                             'vehicle_master.project_id' => $project, 
                             'driver_tracking_history.shift_date' => $shift_date,
-                            'driver_tracking_history.vehicle_equipment_id' => $equipment_id
+                            'driver_tracking_history.vehicle_equipment_id' => $equipment_id,
+                            'driver_tracking_history.shift_code' => $shift_code
                                
                                                  
                                 ); 
@@ -209,12 +218,13 @@ class Delayreport_model extends CI_Model{
 
 
 
-		public function getExcavatorLastTripEnd($shift_date,$project,$equipment_id)
+		public function getExcavatorLastTripEnd($shift_date,$project,$equipment_id,$shift_code)
 	{
 			$where = array(
                             'vehicle_master.project_id' => $project, 
                             'driver_tracking_history.shift_date' => $shift_date,
-                            'driver_tracking_history.vehicle_equipment_id' => $equipment_id
+                            'driver_tracking_history.vehicle_equipment_id' => $equipment_id,
+                            'driver_tracking_history.shift_code' => $shift_code
                                
                                                  
                                 ); 

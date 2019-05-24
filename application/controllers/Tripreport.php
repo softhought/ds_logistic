@@ -20,7 +20,7 @@ class Tripreport extends CI_Controller{
             $page = 'dashboard/admin_dashboard/reports/shift_working_report/trip_report';
             $result['projectList'] = $this->commondatamodel->getAllDropdownData("project_master");
            // $result['trackingList']=$this->trackingmodel->getTrackingDetailsList();
-        
+          
             $header = "";
            
             createbody_method($result, $page, $header, $session);
@@ -53,7 +53,7 @@ class Tripreport extends CI_Controller{
 
             $project=$this->input->post('project');
            
-
+             $result['period']='('.date("d-m-Y",strtotime($fromdate)).' to '.date("d-m-Y",strtotime($todate)).')';
             $materialCount=$this->commondatamodel->rowcount('material_type');
             $shiftCount=$this->commondatamodel->rowcount('shift_master');
             $result['tripReport']=$this->tripreportmodel->getTripReport($fromDate,$toDate,$project);
@@ -125,6 +125,7 @@ class Tripreport extends CI_Controller{
 
             $project=$this->input->post('project');
            
+            $result['period']='('.date("d-m-Y",strtotime($fromdate)).' to '.date("d-m-Y",strtotime($todate)).')';
 
             $materialCount=$this->commondatamodel->rowcount('material_type');
             $shiftCount=$this->commondatamodel->rowcount('shift_master');

@@ -17,7 +17,7 @@ $(document ).ready(function() {
     
     success: function(data){
          $("#observer_dropdown").html(data);
-        $('.selectpicker').selectpicker();
+         $('.selectpicker').selectpicker();
       
        
     },
@@ -181,25 +181,25 @@ $(document ).ready(function() {
 
                 var distanceReportProject = $("#distanceReportProject").val();
 
-                    $('#DistanceReportData').DataTable({
-                        "dom": 'Bfrtip',
-                         "ordering": false,
-                        // "buttons": [
-                        //     'csv', 'excel', 'pdf', 'print'
-                        // ]
-                        buttons: [{
-                            extend: 'pdf',
-                            title: distanceReportProject
-                          }, {
-                            extend: 'excel',
-                            title: distanceReportProject
-                          }, {
-                            extend: 'csv'
-                          },{
-                            extend: 'print',
-                            title: distanceReportProject
-                          }]
-                    });
+                    // $('#DistanceReportData').DataTable({
+                    //     "dom": 'Bfrtip',
+                    //      "ordering": false,
+                    //     // "buttons": [
+                    //     //     'csv', 'excel', 'pdf', 'print'
+                    //     // ]
+                    //     buttons: [{
+                    //         extend: 'pdf',
+                    //         title: distanceReportProject
+                    //       }, {
+                    //         extend: 'excel',
+                    //         title: distanceReportProject
+                    //       }, {
+                    //         extend: 'csv'
+                    //       },{
+                    //         extend: 'print',
+                    //         title: distanceReportProject
+                    //       }]
+                    // });
                 },
                 error: function(jqXHR, exception) {
                     var msg = '';
@@ -224,6 +224,82 @@ $(document ).ready(function() {
         }        
     });
 
+    $(document).on('click','#downloadxls',function(){
+
+          $('#DistanceReportData').tableExport({type:'excel',escape:'false'});
+      
+        
+    });
+
+
+/* calculate differance km */
+
+
+$(document).on('input','.startKM,.endKM',function(){
+  //  $(this).val() // get the current value of the input field.
+        var currRowID = $(this).attr('id');
+        var rowDtlNo = currRowID.split('_');
+        
+
+        var start_distance = $('#start_km_'+rowDtlNo[2]).val();
+        console.log(start_distance);
+        var end_distance = $('#end_km_'+rowDtlNo[2]).val();
+         console.log(end_distance);
+        if (start_distance=='') {start_distance=0;}
+        if (end_distance=='') {end_distance=0;}
+
+        var differ = (end_distance-start_distance);
+
+
+        $('#km_differ_'+rowDtlNo[2]).val(differ);
+
+
+
+   // console.log($(this).val());
+});
+
+
+
+
+/* calculate differance hour */
+
+
+$(document).on('input','.startHour,.endHour',function(){
+  //  $(this).val() // get the current value of the input field.
+        var currRowID = $(this).attr('id');
+        var rowDtlNo = currRowID.split('_');
+        
+        $('.diffTime').removeClass('inputerror');
+        $("#error_msg_distance").text("").css("dispaly", "none").removeClass("form_error");
+        $("#distancesavebtn").show();
+
+        var start_hour = $('#start_hour_'+rowDtlNo[2]).val();
+        console.log(start_hour);
+        var end_hour = $('#end_hour_'+rowDtlNo[2]).val();
+         console.log(end_hour);
+        if (start_hour=='') {start_hour=0;}
+        if (end_hour=='') {end_hour=0;}
+
+        var differ = (end_hour-start_hour);
+
+
+        $('#time_differ_'+rowDtlNo[2]).val(differ); 
+
+        if (differ>8 || differ<-8) {
+
+            var slno =parseInt(rowDtlNo[2])+1;
+            $('#time_differ_'+rowDtlNo[2]).addClass('inputerror');
+             $("#distancesavebtn").hide();
+             $("#error_msg_distance")
+            .text("Error : Time difference greater than 8 hours.Check Sl No :" +slno)
+            .addClass("form_error")
+            .css("display", "block");
+        }
+
+        
+
+   // console.log($(this).val());
+});
 
 
 

@@ -14,17 +14,20 @@
 
 </style>
 <input type="hidden" name="tripReportProject" id="tripReportProject" value="<?php echo $quantityReportProject; ?>">
+<div class="download" id="download" style="display:block;">
+              <button class="btn bg-purple btn-flat margin" name="excavatorreportxls" id="excavatorreportxls"  >Download XLS</button> 
+            </div>
 <div class="datatalberes" style="overflow-x:auto;">
 
 
 <table id="excavatorreport" class="table table-bordered table-striped dataTables" style="border-collapse: collapse !important;text-align: center;overflow-x: scroll;">
-                <thead> 
-                <!-- <tr>
-                  <th rowspan="1" colspan="5" style="text-align:center;"><?php echo $quantityReportProject; ?></th>
-                </tr> -->              
-                <tr>
-                  <th>Sl</th> 
-                  <th >Excavator</th>
+                
+                <tr class="projectHeading">
+                  <td colspan="100%" style="text-align:center;"><?php echo $quantityReportProject.' '.$period; ?></td>
+                </tr>              
+                <tr class="projectHeading">
+                  <td>Sl</td> 
+                  <td >Excavator</td>
                   <?php 
                  $shiftCount=count($shift );
 
@@ -33,10 +36,10 @@
                      $previous=$materiallist->material;
                    ?>
 
-                     <th  style="text-align: center;">
-                      <?php if($i==0){echo $materiallist->material;}?></th> <?php }?>
+                     <td  style="text-align: center;">
+                      <?php if($i==0){echo $materiallist->material;}?></td> <?php }?>
 
-                     <th> <?php echo $materiallist->material.' Total';?></th>
+                     <td> <?php echo $materiallist->material.' Total';?></td>
                  <?php }
                   ?>
                 
@@ -48,8 +51,7 @@
             
 
 
-                </thead>
-                <tbody>
+               
 
                      <tr class="headrow">
                 
@@ -96,7 +98,7 @@
                                        foreach($materialtype['shiftType'] as $shiftType) {
                                         $materialwiseShiftTotal+=$shiftType['shiftTripQuantity'];
                              ?>
-                                          <td><?php  
+                                          <td style="text-align: right;"><?php  
 
                                            // set column total
                                             if(!array_key_exists($index, $colTripCount)) {$colTripCount[$index]=0;}
@@ -109,7 +111,7 @@
                                           $rowGrandTotal+=$materialwiseShiftTotal;
 
                                       ?>
-                                        <td style="font-weight: bold;"> <?php 
+                                        <td style="font-weight: bold;text-align: right;"> <?php 
                                         
                                         // set column total
                                         if(!array_key_exists($index, $colTripCount)) {$colTripCount[$index]=0;}
@@ -136,11 +138,11 @@
                 <?php
                   //  print_r($colTripCount);
                       foreach ($colTripCount as $key => $columntotal) { ?>
-                         <td><?php echo number_format($columntotal,2);?> </td>   
+                         <td style="text-align: right;"><?php echo number_format($columntotal,2);?> </td>   
                 <?php      }
                  ?>
                  </tr> 
-                </tbody>
+              
                
               </table>
 

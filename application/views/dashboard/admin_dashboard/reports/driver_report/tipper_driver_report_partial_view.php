@@ -14,23 +14,26 @@ vertical-align: inherit;
 
 </style>
 <input type="hidden" name="tripReportProject" id="tripReportProject" value="<?php echo $tripReportProject; ?>">
+
+ <div class="download" id="download" style="display:block;">
+              <button class="btn bg-purple btn-flat margin" name="downloadxls" id="downloadxls"  >Download Excel</button> 
+            </div>
 <div class="datatalberes" style="overflow-x:auto;">
 
 
 <table id="TripReportData" class="table table-bordered table-striped dataTables" style="border-collapse: collapse !important;">
-                <thead> 
-                <tr>
-                  <th rowspan="1" colspan="5" style="text-align:center;"><?php echo $tripReportProject; ?></th>
+                
+                <tr class="projectHeading">
+                  <td  colspan="100%" style="text-align:center;"><?php echo $tripReportProject.' '.$period; ?></td>
                 </tr>              
-                <tr>
-                  <th>Sl</th>
-                  <th>Driver</th>
-                  <th>Sum of Counter</th>
-                  <th>Sum of lead</th>
+                <tr class="projectHeading">
+                  <td>Sl</td>
+                  <td>Driver</td>
+                  <td>Sum of Counter</td>
+                  <td>Sum of lead</td>
                  
                 </tr>
-                </thead>
-                <tbody>
+               
                 
                   <?php 
 					// echo "<pre>";
@@ -38,15 +41,20 @@ vertical-align: inherit;
 					// echo "</pre>";
 					
               		$i = 1;
-              		foreach ($driverReport as $value) {                      
+                  $totalTripCount=0;
+                  $LeadSumCount=0;
+              		foreach ($driverReport as $value) { 
+
+                        $totalTripCount+=$value['TripCount'];    
+                         $LeadSumCount+= $value['LeadSum'];         
                                            
               		?>
 
 					<tr>
 					              <td><?php echo $i; ?></td>
                         <td><?php echo $value['driverData']->driver_name; ?></td>
-                        <td><?php echo $value['TripCount'];?></td>
-                        <td><?php echo $value['LeadSum'];?></td>
+                        <td style="text-align: right;"><?php echo $value['TripCount'];?></td>
+                        <td style="text-align: right;"><?php echo $value['LeadSum'];?></td>
                       
                         
 				    </tr>              			
@@ -54,8 +62,12 @@ vertical-align: inherit;
                     $i++;
               		}
               	?>
-                </tbody>
                
+               <tr style="font-weight: bold;">
+                 <td colspan="2">Grand Total</td>
+                 <td style="text-align: right;"><?php echo $totalTripCount;?></td>
+                 <td style="text-align: right;"><?php echo $LeadSumCount;?></td>
+               </tr>
               </table>
 
 

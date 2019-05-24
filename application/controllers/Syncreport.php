@@ -1,10 +1,10 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-class Dumpreport extends CI_Controller{
+class Syncreport extends CI_Controller{
     public function __construct() {
         parent::__construct();
         $this->load->library('session');
         $this->load->model('commondatamodel','commondatamodel',TRUE);
-        $this->load->model('Dumpreportmodel','dumpreport',TRUE);
+        $this->load->model('syncreport_model','syncreport',TRUE);
 
         ini_set('memory_limit', '960M');
         ini_set('post_max_size', '640M');
@@ -17,10 +17,10 @@ class Dumpreport extends CI_Controller{
         $session = $this->session->userdata('user_data');
         if($this->session->userdata('user_data'))
         {   $result = [];            
-            $page = 'dashboard/admin_dashboard/reports/dump_report/tipper_dump_report';
+            $page = 'dashboard/admin_dashboard/reports/sync_report/sync_report_view.php';
             $result['projectList'] = $this->commondatamodel->getAllDropdownData("project_master");
            // $result['trackingList']=$this->trackingmodel->getTrackingDetailsList();
-          
+        
             $header = "";
            
             createbody_method($result, $page, $header, $session);
@@ -32,8 +32,7 @@ class Dumpreport extends CI_Controller{
 
 
 
- /* get  district by state*/
-
+            /* get  district by state*/
 public function getTipperByProject()
     {
         $session = $this->session->userdata('user_data');
@@ -42,29 +41,30 @@ public function getTipperByProject()
             
             $project = $this->input->post('project');
            
-            if($project!='0'){
 
-              $where_vehicle = array(
+            $where_vehicle = array(
                                     'vehicle_master.project_id' => $project, 
-                                    'vehicle_master.vehicle_type_id' => 2, // Tipper
+                                    'vehicle_master.vehicle_type_id' => 2, //2=TIPPER
                                     'vehicle_master.is_active' => 'Y'
                                    
                                   ); 
 
-            $result['tipperData']=$this->commondatamodel->getAllRecordWhere('vehicle_master',$where_vehicle);
+        if($project!='0'){
+ 
+           $result['tipperList']=$this->commondatamodel->getAllRecordWhere('vehicle_master',$where_vehicle); 
 
             }else{
-               $result['tipperData']=[];
+               $result['tipperList']=[];
               
 
            }
            
 
-             // pre($result['tipperData']);
+           /*  pre($result['tipperList']);
 
-             // exit;
-             
-            $page = 'dashboard/admin_dashboard/reports/dump_report/tipper_view';
+             exit;
+             */
+             $page = 'dashboard/admin_dashboard/reports/sync_report/tipper_view.php';
           
             //$partial_view = $this->load->view($page,$result);
             echo $this->load->view($page, $result, TRUE);
@@ -77,48 +77,53 @@ public function getTipperByProject()
     }
 
 
- public function tipperdumpreport()
+       /* Tipper sqnc Report */  
+    public function tipperWiseSyncreport()
     {
         $session = $this->session->userdata('user_data');
         if($this->session->userdata('user_data'))
         { 
             $result =[];
-            $fromdate=$this->input->post('fromDate');
-            $todate=$this->input->post('toDate');
+            $sel_date=$this->input->post('sel_date');
+            $equipment_id=$this->input->post('sel_tipper');
+            
 
-            if($fromdate!="" && $todate!=""){
-                $fromdate = str_replace('/', '-', $fromdate);
-                $fromDate = date("Y-m-d",strtotime($fromdate));
-                $todate = str_replace('/', '-', $todate);
-                $toDate = date("Y-m-d",strtotime($todate));
+            if($sel_date!=""){
+                $sel_date = str_replace('/', '-', $sel_date);
+                $sel_date = date("Y-m-d",strtotime($sel_date));
+              
              }
              else{
-                 $fromDate = NULL;
-                 $toDate = NULL;
+                 $sel_date = NULL;
+                
              }
-
-            $project=$this->input->post('project');
-            $sel_tipper=$this->input->post('sel_tipper');
+ 
+           $project=$this->input->post('project');
+           $reoprtType='Trip';
            
-            $result['period']='('.date("d-m-Y",strtotime($fromdate)).' to '.date("d-m-Y",strtotime($todate)).')';
-            
-            $result['reportData']=$this->dumpreport->getTripReport($fromDate,$toDate,$project,$sel_tipper);
+           $result['period']='('.date("d-m-Y",strtotime($sel_date)).')'; 
+
+            $result['syncReport']=$this->syncreport->getTipperSyncReport($project,$sel_date,$equipment_id);
+          
+
+          //  pre($result['syncReport']);
+           
+
+
+         
             
             if ($project!=0) {
                 $where=[
                     "project_id"=>$project
                 ];
                 $projectName=$this->commondatamodel->getSingleRowByWhereCls('project_master',$where);
-               $result['tipperdumpReport']="Tipper Travelling Trip Report For ".$projectName->project_nickname;
+               $result['tripReportProject']="Tripper wise synchronization report For ".$projectName->project_nickname;
             }else {
-                $result['tipperdumpReport']="Tipper Travelling Trip Report";
+                $result['tripReportProject']="Tripper wise synchronization report";
             }
             
-
-      //  print_r($result['reportData']);
-
-                        
-            $page = 'dashboard/admin_dashboard/reports/dump_report/tipper_dump_report_partial_view.php';
+    
+            $page = 'dashboard/admin_dashboard/reports/sync_report/sync_report_partial_view';
            
            
             $display = $this->load->view($page,$result,TRUE);

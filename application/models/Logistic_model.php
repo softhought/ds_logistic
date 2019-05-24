@@ -73,7 +73,8 @@ class Logistic_model extends CI_Model{
 				$update_array = [
 					"logout_time" => $logout_time,	
 					"session_end_time" => $trip_end_time,
-					"dumping_yard_id" => $localDataArray[$i]->dumping_yard_id	
+					"dumping_yard_id" => $localDataArray[$i]->dumping_yard_id,
+					"last_modified" => date("Y-m-d H:i:s")	
 				];
 				$this->db->where($upd_where);
 				$this->db->update('driver_tracking_history', $update_array);
@@ -112,7 +113,10 @@ class Logistic_model extends CI_Model{
 					"vehicle_equipment_id" => $localDataArray[$i]->vehicle_equipment_id,
 					"shift_date" => $shift_date, // added on 11.03.2019
 					"dumping_yard_id" => $localDataArray[$i]->dumping_yard_id, // added on 30.03.2019
-					"project_material_id" => $localDataArray[$i]->project_material_id
+					"project_material_id" => $localDataArray[$i]->project_material_id,
+					"tipper_equipment_id" => $localDataArray[$i]->tipper_equipment_id,
+					"login_time" => $localDataArray[$i]->login_time,
+					"last_modified" => date("Y-m-d H:i:s")
 				];
 				
 				$this->db->insert('driver_tracking_history', $insert_array);
@@ -120,6 +124,7 @@ class Logistic_model extends CI_Model{
 
 			}
 			#echo $this->db->last_query();
+		
 		}
 		
 		if($this->db->trans_status() === FALSE) {
@@ -472,8 +477,91 @@ class Logistic_model extends CI_Model{
 	}
 	
 	
+	/*
+	 * @desc update and insert loginlogout history data
+	 * @date 16.05.2019
+	 * @By Mithilesh
+	 */
+	public function updateLocalLoginLogoutTransHistory($request) {
+		date_default_timezone_set('Asia/Kolkata');
+		
 	
+		$mobileID = $request->mobileid;
+		$localdatasize = count($request->data);
+		$localDataArray = $request->data;
 	
+		
+		$update_array = [];
+		$insert_array = [];
+
+		
+		
+		
+		for($i=0;$i<$localdatasize;$i++) {
+			
+			
+			$isPreviousData = $this->checkIsDataExist($localDataArray[$i]->mobile_id,$localDataArray[$i]->driver_code,$localDataArray[$i]->login_logout_history_id);
+			
+			if($isPreviousData){
+				//Update Existing Data
+				
+				$upd_where = [
+					"login_logout_history.local_auto_inc_id" => $localDataArray[$i]->login_logout_history_id,
+					"login_logout_history.mobile_id" => $localDataArray[$i]->mobile_id,
+					"login_logout_history.driver_code" => $localDataArray[$i]->driver_code
+				];
+				
+				$logout_time = NULL;
+				if(isset($localDataArray[$i]->logout_time)) {
+					$logout_time = date("Y-m-d H:i:s",strtotime($localDataArray[$i]->logout_time));
+				}
+				
+				$update_array = [
+					"logout_time" => $logout_time
+				];
+				
+				$this->db->where($upd_where);
+				$this->db->update('login_logout_history', $update_array);
+				
+			}
+			else{
+				
+				$logout_time = NULL;
+				
+				if(isset($localDataArray[$i]->logout_time)) {
+					$logout_time = date("Y-m-d H:i:s",strtotime($localDataArray[$i]->logout_time));
+				}
+				
+				// Insert 
+				$insert_array = [
+					"vehicle_equipment_id" => $localDataArray[$i]->vehicle_equipment_id,
+					"driver_code" => $localDataArray[$i]->driver_code,
+					"login_time" => date("Y-m-d H:i:s",strtotime($localDataArray[$i]->login_time)),
+					"logout_time" => $logout_time,		
+					"sync_date" => date("Y-m-d H:i:s"),
+					"is_sync" => 'Y',
+					"login_by" => $localDataArray[$i]->login_by, 
+					"mobile_id" => $localDataArray[$i]->mobile_id, 
+					"local_auto_inc_id" => $localDataArray[$i]->login_logout_history_id
+				];
+				
+				$this->db->insert('login_logout_history', $insert_array);
+				$inserted_id = $this->db->insert_id();
+
+			}
+		
+		}
+		
+		if($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+			return false;
+        }
+		else {
+			$this->db->trans_commit();
+               return true;
+           }
+
+	}
 	
 	
 	

@@ -14,27 +14,29 @@ vertical-align: inherit;
 
 </style>
 <input type="hidden" name="tripReportProject" id="tripReportProject" value="<?php echo $tripReportProject; ?>">
+ <div class="download" id="download" style="display:block;">
+              <button class="btn bg-purple btn-flat margin" name="downloadxls" id="downloadxls"  >Download Excel</button> 
+            </div>
 <div class="datatalberes" style="overflow-x:auto;">
 
 
 <table id="TripReportData" class="table table-bordered table-striped dataTables" style="border-collapse: collapse !important;">
-                <thead> 
-                <tr>
-                  <th rowspan="1" colspan="7" style="text-align:center;"><?php echo $tripReportProject; ?></th>
+                
+                <tr class="projectHeading">
+                  <td  colspan="100%" style="text-align:center;"><?php echo $tripReportProject.' '.$period; ?></td>
                 </tr>              
-                <tr>
-                  <th>Sl</th>
-                  <th>Excavator</th>
-                  <th align="center">Shift</th>
-                  <th>First Trip Start</th>
-                  <th>Start Ideal Time</th>
-                  <th>Last Trip End</th>
-                  <th>End Ideal Time</th>
+                <tr class="projectHeading">
+                  <td>Sl</td>
+                  <td>Excavator</td>
+                  <td align="center">Shift</td>
+                  <td>First Trip Start</td>
+                  <td>Start Ideal Time</td>
+                  <td>Last Trip End</td>
+                  <td>End Ideal Time</td>
                  
                  
                 </tr>
-                </thead>
-                <tbody>
+               
                 
                   <?php 
 					// echo "<pre>";
@@ -90,7 +92,7 @@ vertical-align: inherit;
                     $i++;
               		}
               	?>
-                </tbody>
+               
                
               </table>
 

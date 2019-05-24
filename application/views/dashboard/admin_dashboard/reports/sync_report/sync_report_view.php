@@ -1,11 +1,22 @@
-<script type="text/javascript" src="<?php echo base_url();?>assets/js/adm_scripts/dump_report.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/tableExport.js"></script>  
-<script src="<?php echo base_url(); ?>assets/js/jquery.base64.js"></script>  
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/adm_scripts/sync_report.js"></script>
+  <script src="<?php echo base_url(); ?>assets/js/tableExport.js"></script>  
+<script src="<?php echo base_url(); ?>assets/js/jquery.base64.js"></script> 
 <style>
 
 .excavatorerror{
  // border: 1px solid #dd4b39!important;
  background: #ef9797!important;
+}
+
+.readonly{
+  background-color: #f2e8dc;
+}
+
+.projectHeading{
+  text-align: center;
+  font-weight: bold;
+  background-color: #0e8ac5!important;
+  color: #FFF !important;
 }
 </style>
    <section class="content-header">
@@ -15,7 +26,7 @@
       </h1>
       <ol class="breadcrumb">
         <li><a href="<?php echo base_url(); ?>dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Tipper Dump Report</li>
+        <li class="active">Synchronization Report</li>
       </ol>
     </section>
 
@@ -24,52 +35,22 @@
 
 		    <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Tipper Dump Report</h3>&nbsp;
+              <h3 class="box-title">Synchronization Report</h3>&nbsp;
              
             </div>
             <!-- /.box-header -->
 
-            <form action="#" name="TipperDumpReport" id="TipperDumpReport">
-              <div class="row" style="margin: 2% auto;margin-bottom: 0;">
-                  <div class="col-md-offset-4 col-md-2">
-                        <div class="form-group">
-                            <label>From Date</label>
-                            <div class="input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
-                                <input type="text" class="form-control" name="fromDate" id="fromDate" value="<?php echo date("d/m/Y"); ?>" readonly >
-                                <div class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                                </div>
-                            </div>
-                            <!-- /.input group -->
-                        </div>
-                  </div>   <!-- /.col-md-4 END -->
-                 
-                  <div class="col-md-2">
-                        <div class="form-group">
-                          <label>To Date</label>
-                          <div class="input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
-                                <input type="text" class="form-control" name="toDate" id="toDate" value="<?php echo date("d/m/Y"); ?>" readonly >
-                                <div class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                                </div>
-                            </div>
-                          <!-- /.input group -->
-                        </div>
-                  </div> <!-- /.col-md-4 END -->
-           
-                 
-               
-                
-              </div>
+            <form action="#" name="syncReport" id="syncReport">
 
 
-              <div class="row" style="margin-bottom: 0;">
+
+                  <div class="row" style="margin: 2% auto;margin-bottom: 0;">
                     
-                    <div class="col-md-offset-4 col-md-2">
+                    <div class="col-md-offset-4 col-md-4">
                     <div class="form-group">
                             <label for="project">Project</label> 
                             <select id="project" name="project" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
-                              <option value="0">Select</option>
+                             <option value="0">Select</option>
                                 <?php 
                                   if($bodycontent['projectList'])
                                   {
@@ -83,19 +64,43 @@
                           </div>
                     </div> <!-- /.col-md-4 END -->
 
-                    <div class="col-md-2">
+                   
+                    </div> <!-- row end-->
+
+                        <div class="row" style="margin-bottom: 0;">
+
+                             <div class="col-md-offset-4 col-md-2">
+                        <div class="form-group">
+                            <label>Date</label>
+                            <div class="input-group date" data-provide="datepicker" data-date-format="dd/mm/yyyy">
+                                <input type="text" class="form-control" name="sel_date" id="sel_date" value="<?php echo date("d/m/Y"); ?>" readonly >
+                                <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                                </div>
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                  </div>   <!-- /.col-md-4 END -->
+                    
+                  
+
+                       <div class="col-md-2">
                     <div class="form-group">
                             <label for="tipper">Tipper</label> 
-                            <div id="tipper_dropdown">
-                            <select id="sel_tipper" name="sel_tipper" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
-                              <option value="0">Select</option>
-                                
-                            </select></div>
+                             <div id="tipper_dropdown">
+                             <select id="sel_tipper" name="sel_tipper" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
+                            <option value="0">Select</option>
+                            </select>
+                          </div>
+                        
                           </div>
                     </div> <!-- /.col-md-4 END -->
-
- 
                     </div> <!-- row end-->
+
+
+
+
+          
 
 
                         <div class="row" style="margin-left: 0;margin-right: 15px;">
@@ -108,7 +113,7 @@
                     <div class="row" style="margin-left: 0;">
                     <div class=" col-md-offset-5 col-md-4">
                     <div class="form-group">
-                        <button type="button" id="tipperDumpReportBtn" class="btn bg-navy btn-flat margin" style="margin-left:30px;margin-top:5px;border-radius: 5px !important;background:#09749f !important;"> <i class="fa fa-eye"></i> View </button>
+                        <button type="button" id="syncReportBtn" class="btn bg-navy btn-flat margin" style="margin-left:30px;margin-top:5px;border-radius: 5px !important;background:#09749f !important;"> <i class="fa fa-eye"></i> View </button>
                     </div>
                     <p id="error_msg" class="form_error"></p>
                   </div> <!-- /.col-md-4 END -->
@@ -128,7 +133,7 @@
                   Please Wait Loading ...
               </div>
 
-              <div id="tipperDumpReportView">
+              <div id="sqncreportView">
 
                 
 

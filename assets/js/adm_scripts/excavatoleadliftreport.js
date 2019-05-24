@@ -90,10 +90,10 @@ function validateLeadLift()
 {
     $("#error_msg").text("").css("dispaly", "none").removeClass("form_error");
     var frmdt=$('#fromDate').val().replace('/', '-');
-    var todt=$('#toDate').val().replace('/', '-');
+    
     var project=$('#project').val();
     console.log(frmdt);
-    console.log(todt);
+ 
     // if(frmdt > todt)
     // {
     //     $("#fromDate").focus();

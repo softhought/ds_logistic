@@ -22,6 +22,14 @@ text-align: center;
 font-weight: bold;
 color: gray;
 }
+
+
+.hidetdth{
+display: none!important;
+}
+input{
+  width: 115px;
+}
 </style>
 <hr>
 <div style="margin-bottom: 10px;font-size: 15px;">
@@ -51,10 +59,13 @@ color: gray;
                 <tr>
                  <th>Sl</th> 
                  <th>Vehicle</th> 
-                 <th>Opening Km</th> 
-                 <th>Opening Hour</th> 
-                 <th>Closing Km</th> 
+                 <th class="<?php echo $hidecolumn;?>">Opening Km</th> 
+                 
+                 <th class="<?php echo $hidecolumn;?>">Closing Km</th> 
+                 <th class="<?php echo $hidecolumn;?>">Km Difference</th> 
+                  <th>Opening Hour</th>
                  <th>Closing Hour</th>
+                 <th>Hour Difference</th>
                 
                 </tr>
                 </thead>
@@ -77,23 +88,36 @@ color: gray;
             </td> 
             <td style="font-weight: bold;color: #dd7020;"><?php echo $value->equipment_name; ?></td>
 
-            <td>
+            <td class="<?php echo $hidecolumn;?>">
             <input type="hidden" name="distance_details_id[]" id="distance_details_id_<?php echo $row;?>" 
             value="<?php if($mode=="EDIT"){echo $value->distance_details_id;}else{echo '';}?>" readonly>
               <input type="hidden" name="equipment_id[]" id="equipment_id_<?php echo $row;?>" value="<?php echo $value->equipment_id; ?>" readonly>
 
-              <input class="<?php echo $startinput?>" type="text" name="start_km[]" id="start_km_<?php echo $row;?>" onKeyUp="numericFilter(this);" autocomplete="off" value="<?php if($mode=="EDIT"){echo $value->start_km;}else{echo '';}?>" <?php echo $startinput?> >  </td>
-            <td><input type="text"  name="start_hour[]" id="start_hour_<?php echo $row;?>" autocomplete="off"  value="<?php if($mode=="EDIT"){echo $value->start_time;}else{echo '';}?>" onKeyUp="numericFilter(this);">
+              <input class="<?php echo $startinput?> startKM" type="text" name="start_km[]" id="start_km_<?php echo $row;?>" onKeyUp="numericFilter(this);" autocomplete="off" value="<?php if($mode=="EDIT"){echo $value->start_km;}else{echo '';}?>" <?php echo $startinput?> >  </td>
+
+               <td class="<?php echo $hidecolumn;?>">
+                <input class="endKM" type="text" name="end_km[]" id="end_km_<?php echo $row;?>" onKeyUp="numericFilter(this);" autocomplete="off" value="<?php if($mode=="EDIT"){echo $value->end_km;}else{echo '';}?>">
+              </td>
+
+               <td class="<?php echo $hidecolumn;?>">
+                 <input class="readonly" type="text" name="km_differ[]" id="km_differ_<?php echo $row;?>" value="<?php if($mode=="EDIT"){echo $value->km_differ;}else{echo '';}?>" readonly >
+               </td>
+
+            <td><input class="startHour" type="text"  name="start_hour[]" id="start_hour_<?php echo $row;?>" autocomplete="off"  value="<?php if($mode=="EDIT"){echo $value->start_time;}else{echo '';}?>" onKeyUp="numericFilter(this);">
                 &nbsp;<!-- <i class="glyphicon glyphicon-remove-circle reset"  onclick="return resetInput('start_hour_',<?php echo $row;?>)"></i> -->
 
               <!--  <input type="text" class=" timepicker" id="end_time" name="end_time" placeholder="End Time" autocomplete="off" value="" > -->
 
 
             </td>
-            <td><input type="text" name="end_km[]" id="end_km_<?php echo $row;?>" onKeyUp="numericFilter(this);" autocomplete="off" value="<?php if($mode=="EDIT"){echo $value->end_km;}else{echo '';}?>"></td>
-            <td><input type="text"  name="end_hour[]" id="end_hour_<?php echo $row;?>" autocomplete="off"  value="<?php if($mode=="EDIT"){echo $value->end_time;}else{echo '';}?>" onKeyUp="numericFilter(this);">
+           
+            <td><input class="endHour" type="text"  name="end_hour[]" id="end_hour_<?php echo $row;?>" autocomplete="off"  value="<?php if($mode=="EDIT"){echo $value->end_time;}else{echo '';}?>" onKeyUp="numericFilter(this);">
               &nbsp;<!-- <i class="glyphicon glyphicon-remove-circle reset"  onclick="return resetInput('end_hour_',<?php echo $row;?>)"></i> -->
             </td>
+
+              <td>
+                 <input class="readonly diffTime" type="text" name="time_differ[]" id="time_differ_<?php echo $row;?>" value="<?php if($mode=="EDIT"){echo $value->time_differ;}else{echo '';}?>" readonly >
+              </td>
            
                        
 				    </tr>              			
@@ -105,7 +129,7 @@ color: gray;
                
               </table>
 
-                  <p id="error_msg" class="form_error"></p>
+                  <p id="error_msg_distance" class="form_error"></p>
                   <p id="response_message" ></p>
 
                   <div class="btnDiv">

@@ -108,5 +108,12 @@ $(document ).ready(function() {
     });
 
 
+     $(document).on('click','#downloadxls',function(){
+
+          $('#TripReportData').tableExport({type:'excel',escape:'false'});
+      
+        
+    });
+    
 
 });/* document ready end */

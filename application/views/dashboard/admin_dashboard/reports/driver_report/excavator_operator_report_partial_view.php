@@ -14,23 +14,25 @@ vertical-align: inherit;
 
 </style>
 <input type="hidden" name="tripReportProject" id="tripReportProject" value="<?php echo $tripReportProject; ?>">
+<div class="download" id="download" style="display:block;">
+              <button class="btn bg-purple btn-flat margin" name="downloadxls" id="downloadxls"  >Download XLS</button> 
+            </div>
 <div class="datatalberes" style="overflow-x:auto;">
 
 
 <table id="TripReportData" class="table table-bordered table-striped dataTables" style="border-collapse: collapse !important;">
-                <thead> 
-                <tr>
-                  <th rowspan="1" colspan="5" style="text-align:center;"><?php echo $tripReportProject; ?></th>
+               
+                <tr class="projectHeading">
+                  <td  colspan="100%" style="text-align:center;"><?php echo $tripReportProject.' '.$period; ?></td>
                 </tr>              
-                <tr>
-                  <th>Sl</th>
-                  <th>Operator</th>
-                  <th>Sum of Counter</th>
+                <tr class="projectHeading">
+                  <td>Sl</td>
+                  <td>Operator</td>
+                  <td>Sum of Counter</td>
               
                  
                 </tr>
-                </thead>
-                <tbody>
+               
                 
                   <?php 
 					// echo "<pre>";
@@ -38,14 +40,16 @@ vertical-align: inherit;
 					// echo "</pre>";
 					
               		$i = 1;
-              		foreach ($operatorReport as $value) {                      
+                  $totalTrip=0;
+              		foreach ($operatorReport as $value) {  
+                  $totalTrip+=$value['tripCountshiftType'];;                    
                                            
               		?>
 
 					<tr>
 					              <td><?php echo $i; ?></td>
-                        <td><?php echo $value['operatorData']->driver_name; ?></td>
-                        <td><?php echo $value['tripCountshiftType'];?></td>
+                        <td ><?php echo $value['operatorData']->driver_name; ?></td>
+                        <td style="text-align: right;"><?php echo $value['tripCountshiftType'];?></td>
                        
                         
 				    </tr>              			
@@ -53,8 +57,12 @@ vertical-align: inherit;
                     $i++;
               		}
               	?>
-                </tbody>
                
+                <tr style="font-weight: bold;">
+                 <td colspan="2">Grand Total</td>
+                 <td style="text-align: right;"><?php echo $totalTrip;?></td>
+                
+               </tr>
               </table>
 
 

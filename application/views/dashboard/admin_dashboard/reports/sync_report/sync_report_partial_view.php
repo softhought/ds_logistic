@@ -17,24 +17,25 @@ vertical-align: inherit;
 </style>
 <input type="hidden" name="tripReportProject" id="tripReportProject" value="<?php echo $tripReportProject; ?>">
 <div class="download" id="download" style="display:block;">
-              <button class="btn bg-purple btn-flat margin" name="TripReportdownloadxls" id="TripReportdownloadxls"  >Download XLS</button> 
+              <button class="btn bg-purple btn-flat margin" name="downloadxls" id="downloadxls"  >Download XLS</button> 
             </div>
 
 <div class="datatalberes" style="overflow-x:auto;">
 
 
-<table id="TripReportData" class="table table-bordered table-striped dataTables" style="border-collapse: collapse !important;">
+<table id="SyncReportData" class="table table-bordered table-striped dataTables" style="border-collapse: collapse !important;">
                
                 <tr class="projectHeading">
                   <td  colspan="100%" style="text-align:center;"><?php echo $tripReportProject.' '.$period; ?></td>
                 </tr>              
                 <tr class="projectHeading">
-                  <!-- <th>Sl</th> -->
-                  <td>Material</td>
-                  <td>A</td>
-                  <td>B</td>
-                  <td>C</td>
-                  <td>Total</td>      
+                  <td>Sl</td>
+                  <td>Tipper</td>
+                  <td>Sync Date</td>
+                  <td>Last Modified</td>
+                  <td>Mobile No</td>
+                  <td>Mobile UID</td>
+                     
                 </tr>
                
                 
@@ -44,17 +45,26 @@ vertical-align: inherit;
 					// echo "</pre>";
 					
               		$i = 1;
-              		foreach ($tripReport as $value) {                      
+              		foreach ($syncReport as $value) {                      
                                            
               		?>
 
 					<tr>
-						<!-- <td><?php echo $i; ?></td> -->
-                        <td><?php echo $value['materialType']; ?></td>
-                        <td style="text-align: right;"><?php echo $value['A']; ?></td>
-                        <td style="text-align: right;"><?php echo $value['B']; ?></td>
-                        <td style="text-align: right;"><?php echo $value['C']; ?></td>
-                        <td style="text-align: right;"><?php echo $value['Total']; ?></td>
+		                    <td><?php echo $i; ?></td> 
+                        <td><?php echo $value['tipperData']->equipment_name;?></td>
+                        <td><?php echo date("d-m-Y H:i:s",strtotime($value['lastSync']->capture_on));?></td>
+                        <td><?php 
+
+                         if($value['lastSync']->last_modified!=NULL){
+                            echo date("d-m-Y H:i:s",strtotime($value['lastSync']->last_modified));
+                          }
+
+                         ?></td>
+                        <td><?php echo $value['lastSync']->mobile_no;?></td>
+                        <td><?php echo $value['lastSync']->mobile_uuid;?></td>
+                       
+                       
+                     
 				    </tr>              			
               	<?php
                     $i++;

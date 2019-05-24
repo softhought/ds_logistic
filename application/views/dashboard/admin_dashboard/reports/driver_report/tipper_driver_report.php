@@ -1,10 +1,21 @@
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/adm_scripts/driver_operator.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/tableExport.js"></script>  
+<script src="<?php echo base_url(); ?>assets/js/jquery.base64.js"></script>  
 <style>
 
 .excavatorerror{
  // border: 1px solid #dd4b39!important;
  background: #ef9797!important;
 }
+
+
+.projectHeading{
+  text-align: center;
+  font-weight: bold;
+  background-color: #0e8ac5!important;
+  color: #FFF !important;
+}
+
 </style>
    <section class="content-header">
       <h1>

@@ -12,30 +12,39 @@ vertical-align: inherit;
   border: 1px solid #aeaeae;
 }
 
+.projectHeading{
+  text-align: center;
+  font-weight: bold;
+  background-color: #0e8ac5!important;
+  color: #FFF !important;
+}
+
+
 </style>
 <input type="hidden" name="tipperdumpReport" id="tipperdumpReport" value="<?php echo $tipperdumpReport; ?>">
+<div class="download" id="download" style="display:block;">
+              <button class="btn bg-purple btn-flat margin" name="downloadxls" id="downloadxls"  >Download XLS</button> 
+            </div>
 <div class="datatalberes" style="overflow-x:auto;">
 
 
 <table id="TripReportData" class="table table-bordered table-striped dataTables" style="border-collapse: collapse !important;">
-                <thead> 
-                <tr>
-                  <th rowspan="1" colspan="9" style="text-align:center;"><?php echo $tipperdumpReport; ?></th>
-                </tr>              
-                <tr>
-                 <th>Sl</th> 
-                 <th>Material Type</th> 
-                  <th>Shift Date</th>
-                  <th>Shift Code</th>
-                  <th>Tipper</th>
-                  <th>Excavator</th>
-                  <th>Dumping Yard</th>
-                  <th>Start Time</th>
-                  <th>End Time</th>
+               
+                <tr class="projectHeading"><td colspan="9"><?php echo $tipperdumpReport.' '.$period; ?></td>
+                </tr>                
+                <tr class="projectHeading">
+                 <td>Sl</td> 
+                 <td>Material Type</td> 
+                  <td>Shift Date</td>
+                  <td>Shift Code</td>
+                  <td>Tipper</td>
+                  <td>Excavator</td>
+                  <td>Dumping Yard</td>
+                  <td>Start Time</td>
+                  <td>End Time</td>
                    
                 </tr>
-                </thead>
-                <tbody>
+             
                 
                   <?php 
 					// echo "<pre>";
@@ -47,7 +56,7 @@ vertical-align: inherit;
                                            
               		?>
 
-					<tr>
+					<tr >
 						<td><?php echo $i; ?></td> 
             <td><?php echo $value->material_type; ?></td>
              <td><?php echo date('d-m-Y',strtotime($value->shift_date)); ?></td>
@@ -63,7 +72,7 @@ vertical-align: inherit;
                     $i++;
               		}
               	?>
-                </tbody>
+             
                
               </table>
 

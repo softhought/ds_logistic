@@ -40,7 +40,7 @@ class Excavatoleadliftreport_model extends CI_Model
 
 
 
-    public function getExcavatorLeadLiftReport($fromDate,$toDate,$project,$reoprtType)
+    public function getExcavatorLeadLiftReport($fromDate,$project,$reoprtType)
     {
       $data=[];
 
@@ -61,7 +61,7 @@ class Excavatoleadliftreport_model extends CI_Model
            
               $data[]=[
                         "shift"=>$rows,
-                        "excavatorList"=>$this->getLeadAgainstVehicleList($fromDate,$toDate,$project,$reoprtType,$rows->shift_code)
+                        "excavatorList"=>$this->getLeadAgainstVehicleList($fromDate,$project,$reoprtType,$rows->shift_code)
                       ];
            
         }
@@ -74,13 +74,14 @@ class Excavatoleadliftreport_model extends CI_Model
     }
 
 
-    public function getLeadAgainstVehicleList($fromDate,$toDate,$project,$reoprtType,$shift_code)
+    public function getLeadAgainstVehicleList($fromDate,$project,$reoprtType,$shift_code)
     {
       $data=[];
 
       $where = array(
                       'lead_against_vehicle.shift_code' => $shift_code,
-                      'lead_against_vehicle.project_id' => $project
+                      'lead_against_vehicle.project_id' => $project,
+                      'DATE_FORMAT(lead_against_vehicle.shift_date,"%Y-%m-%d")' => $fromDate
                       
                      );
 
@@ -88,8 +89,8 @@ class Excavatoleadliftreport_model extends CI_Model
                         ->from('lead_against_vehicle')
                         ->join('vehicle_master','vehicle_master.vehicle_id=lead_against_vehicle.vehicle_mst_id','INNER')
                         ->where($where)
-                        ->where('DATE_FORMAT(`lead_against_vehicle`.`shift_date`,"%Y-%m-%d") >= ', $fromDate)
-                        ->where('DATE_FORMAT(`lead_against_vehicle`.`shift_date`,"%Y-%m-%d") <= ', $toDate)
+                       // ->where('DATE_FORMAT(`lead_against_vehicle`.`shift_date`,"%Y-%m-%d") >= ', $fromDate)
+                       // ->where('DATE_FORMAT(`lead_against_vehicle`.`shift_date`,"%Y-%m-%d") <= ', $toDate)
                         ->get();
                         #q();
 
@@ -99,7 +100,7 @@ class Excavatoleadliftreport_model extends CI_Model
            
               $data[]=[
                         "excavator"=>$rows,
-                        "LeadLiftColumn"=>$this->getLeadLiftColumn($fromDate,$toDate,$project,$reoprtType,$shift_code,$rows->equipment_id)
+                        "LeadLiftColumn"=>$this->getLeadLiftColumn($fromDate,$project,$reoprtType,$shift_code,$rows->equipment_id)
                       ];
 
         
@@ -114,7 +115,7 @@ class Excavatoleadliftreport_model extends CI_Model
     }
 
 
-    public function getLeadLiftColumn($fromDate,$toDate,$project,$reoprtType,$shift_code,$equipment_id)
+    public function getLeadLiftColumn($fromDate,$project,$reoprtType,$shift_code,$equipment_id)
     {
       $data=[];
 
@@ -130,7 +131,7 @@ class Excavatoleadliftreport_model extends CI_Model
            
               $data[]=[
                         "LeadLiftColumnData"=>$rows,
-                        "materialType"=>$this->getMererialByProject($fromDate,$toDate,$project,$reoprtType,$shift_code,$equipment_id,$rows->column_type)
+                        "materialType"=>$this->getMererialByProject($fromDate,$project,$reoprtType,$shift_code,$equipment_id,$rows->column_type)
                       ];
 
         
@@ -146,7 +147,7 @@ class Excavatoleadliftreport_model extends CI_Model
 
 
 
-        public function getMererialByProject($fromDate,$toDate,$project,$reoprtType,$shift_code,$equipment_id,$column_type)
+        public function getMererialByProject($fromDate,$project,$reoprtType,$shift_code,$equipment_id,$column_type)
     {
       $data=[];
 
@@ -173,7 +174,7 @@ class Excavatoleadliftreport_model extends CI_Model
                   "project_material_id"=>$rows->project_material_id,
                   "material_type_id"=>$rows->material_type_id,
                   "material"=>$rows->material,
-                  "LeadData"=>$this->getLeadExcavatorAssign($fromDate,$toDate,$project,$reoprtType,$shift_code,$equipment_id,$rows->project_material_id,$column_type)
+                  "LeadData"=>$this->getLeadExcavatorAssign($fromDate,$project,$reoprtType,$shift_code,$equipment_id,$rows->project_material_id,$column_type)
                 ]; 
            
         }
@@ -187,7 +188,7 @@ class Excavatoleadliftreport_model extends CI_Model
 
 
     // get shiftwise trip count 
-public function getLeadExcavatorAssign($fromDate,$toDate,$project,$reoprtType,$shift_code,$equipment_id,$project_material_id,$column_type){
+public function getLeadExcavatorAssign($fromDate,$project,$reoprtType,$shift_code,$equipment_id,$project_material_id,$column_type){
 
  
        $count=0;
@@ -196,6 +197,7 @@ public function getLeadExcavatorAssign($fromDate,$toDate,$project,$reoprtType,$s
                         'vehicle_master.equipment_id' => $equipment_id,
                         'lead_against_vehicle.shift_code' => $shift_code,
                         'lead_against_vehicle.project_material_id' => $project_material_id,
+                        'DATE_FORMAT(lead_against_vehicle.shift_date,"%Y-%m-%d")' => $fromDate
                        
 
        );
@@ -207,8 +209,8 @@ public function getLeadExcavatorAssign($fromDate,$toDate,$project,$reoprtType,$s
                         ->from('lead_against_vehicle')
                         ->join('vehicle_master','vehicle_master.vehicle_id=lead_against_vehicle.vehicle_mst_id','INNER')
                         ->where($where)
-                        ->where('DATE_FORMAT(`lead_against_vehicle`.`shift_date`,"%Y-%m-%d") >= ', $fromDate)
-                        ->where('DATE_FORMAT(`lead_against_vehicle`.`shift_date`,"%Y-%m-%d") <= ', $toDate)
+                       // ->where('DATE_FORMAT(`lead_against_vehicle`.`shift_date`,"%Y-%m-%d") >= ', $fromDate)
+                       // ->where('DATE_FORMAT(`lead_against_vehicle`.`shift_date`,"%Y-%m-%d") <= ', $toDate)
                         ->get();
 
        
@@ -220,8 +222,8 @@ public function getLeadExcavatorAssign($fromDate,$toDate,$project,$reoprtType,$s
                         ->from('lead_against_vehicle')
                         ->join('vehicle_master','vehicle_master.vehicle_id=lead_against_vehicle.vehicle_mst_id','INNER')
                         ->where($where)
-                        ->where('DATE_FORMAT(`lead_against_vehicle`.`shift_date`,"%Y-%m-%d") >= ', $fromDate)
-                        ->where('DATE_FORMAT(`lead_against_vehicle`.`shift_date`,"%Y-%m-%d") <= ', $toDate)
+                       // ->where('DATE_FORMAT(`lead_against_vehicle`.`shift_date`,"%Y-%m-%d") >= ', $fromDate)
+                       // ->where('DATE_FORMAT(`lead_against_vehicle`.`shift_date`,"%Y-%m-%d") <= ', $toDate)
                         ->get();
 
       }

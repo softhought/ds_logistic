@@ -11,36 +11,42 @@ vertical-align: inherit;
 .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
   border: 1px solid #aeaeae;
 }
+.hidetdth{
+display: none!important;
+}
 
 </style>
 <input type="hidden" name="distanceReportProject" id="distanceReportProject" value="<?php echo $distanceReportProject; ?>">
+
+  <div class="download" id="download" style="display:block;">
+              <button class="btn bg-purple btn-flat margin" name="downloadxls" id="downloadxls"  >Download Excel</button> 
+            </div>
 <div class="datatalberes" style="overflow-x:auto;">
 
 
-<table id="DistanceReportData" class="table table-bordered table-striped dataTables" style="border-collapse: collapse !important;text-align: center;">
-                <thead> 
-                <tr>
-                  <th rowspan="1" colspan="16" style="text-align:center;"><?php echo $distanceReportProject; ?></th>
+<table id="DistanceReportData" class="table table-bordered table-striped dataTables" style="border-collapse: collapse !important;text-align: center;overflow-x: scroll;">
+              
+                <tr class="projectHeading">
+                  <td  colspan="100%" style="text-align:center;"><?php echo $distanceReportProject.' '.$period; ?></td>
                 </tr>              
-                <tr>
-                  <th style="width:2%">Sl</th>
-                  <th style="width:10%"><?php echo $vehicle;?></th>
+                <tr class="projectHeading">
+                  <td style="width:2%">Sl</td>
+                  <td style="width:10%"><?php echo $vehicle;?></td>
                   <?php 
                         foreach ($shiftList as $shiftlist) {
                        
                     ?>
-                  <th style="border-right: 0px"> </th>
-                  <th style="border-right: 0px;text-align: right;"><?php echo $shiftlist->shift_code;?></th>
-                  <th style="border-right: 0px"></th>
-                  <th></th>
+                  <td class="<?php echo $hidecolumn;?>" style="border-right:1px solid #0e8ac5 !important;"> </td>
+                  <td style="border-right:1px solid #0e8ac5 !important;text-align: right;"><?php echo $shiftlist->shift_code;?></td>
+                  <td class="<?php echo $hidecolumn;?>"  style="border-right:1px solid #0e8ac5 !important;"></td>
+                  <td></td>
                 <?php }?>
-                <th style="width:5%"></th>
-                <th style="width:5%"></th>
+                <td class="<?php echo $hidecolumn;?>" style="width:5%"></td>
+                <td  style="width:5%"></td>
                   
                  
                 </tr>
-                </thead>
-                <tbody>
+               
 
                   <tr style="background-color: #0e8ac5;color: #fff;">
                     <td></td>
@@ -50,19 +56,20 @@ vertical-align: inherit;
                         foreach ($shiftList as $shiftlist) {
                        
                     ?>
-                  <td>Opening Km.</td>
+                  <td class="<?php echo $hidecolumn;?>">Opening Km.</td>
+                  <td class="<?php echo $hidecolumn;?>">Closing Km.</td>
                   <td>Opening Hour</td>
-                  <td>Closing Km.</td>
+                  
                   <td>Closing Hour</td>
                 <?php }?>
 
-                    <td>Total Km.</td>
+                    <td class="<?php echo $hidecolumn;?>">Total Km.</td>
                     <td>Total Hour</td>
                   </tr>
                 
                   <?php 
 					// echo "<pre>";
-					// print_r($driverReport);
+					// print_r($distanceReport);
 					// echo "</pre>";
 					
               		$i = 1;
@@ -86,16 +93,17 @@ vertical-align: inherit;
                           $shiftdiffhour=($shifttype['distanceDetails']->end_time-$shifttype['distanceDetails']->start_time);
                          
                     ?>
-                  <td><?php echo $shifttype['distanceDetails']->start_km;?></td>
+                  <td class="<?php echo $hidecolumn;?>" style="text-align: right;"><?php echo $shifttype['distanceDetails']->start_km;?></td>
+                  <td class="<?php echo $hidecolumn;?>" style="text-align: right;"><?php echo $shifttype['distanceDetails']->end_km;?></td>
                   <td><?php echo $shifttype['distanceDetails']->start_time;?></td>
-                  <td><?php echo $shifttype['distanceDetails']->end_km;?></td>
+                 
                   <td><?php echo $shifttype['distanceDetails']->end_time;?>
                     
                     
                   </td>
                       <?php }else{?>
-                        <td></td>
-                        <td></td>
+                        <td class="<?php echo $hidecolumn;?>"></td>
+                        <td class="<?php echo $hidecolumn;?>"></td>
                         <td></td>
                         <td></td>
                 <?php } 
@@ -104,8 +112,8 @@ vertical-align: inherit;
                 $rowtotalhour+=$shiftdiffhour;
 
               }?>
-                <td style="font-weight: bold;"> <?php echo $rowtotalkm;?></td>
-                 <td style="font-weight: bold;"><?php echo $rowtotalhour;?></td>
+                <td class="<?php echo $hidecolumn;?>" style="font-weight: bold;text-align: right;"> <?php echo number_format($rowtotalkm,2);?></td>
+                 <td style="font-weight: bold;text-align: right;"><?php echo number_format($rowtotalhour,2);?></td>
                       
                         
 				    </tr>              			
@@ -113,7 +121,7 @@ vertical-align: inherit;
                     $i++;
               		}
               	?>
-                </tbody>
+              
                
               </table>
 

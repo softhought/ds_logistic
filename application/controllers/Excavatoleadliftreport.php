@@ -40,16 +40,18 @@ class Excavatoleadliftreport extends CI_Controller{
             $fromdate=$this->input->post('fromDate');
             $todate=$this->input->post('toDate');
 
-            if($fromdate!="" && $todate!=""){
+            if($fromdate!=""){
                 $fromdate = str_replace('/', '-', $fromdate);
                 $fromDate = date("Y-m-d",strtotime($fromdate));
-                $todate = str_replace('/', '-', $todate);
-                $toDate = date("Y-m-d",strtotime($todate));
+               
              }
              else{
                  $fromDate = NULL;
-                 $toDate = NULL;
+               
              }
+
+             $result['period']='('.date("d-m-Y",strtotime($fromdate)).')';
+             
  
            $project=$this->input->post('project');
            $reoprtType='Trip';
@@ -57,7 +59,7 @@ class Excavatoleadliftreport extends CI_Controller{
 
             $materialCount=$this->commondatamodel->rowcount('material_type');
             $shiftCount=$this->commondatamodel->rowcount('shift_master');
-            $result['excawiseLeadLift']=$this->excavatoleadlift->getExcavatorLeadLiftReport($fromDate,$toDate,$project,$reoprtType);
+            $result['excawiseLeadLift']=$this->excavatoleadlift->getExcavatorLeadLiftReport($fromDate,$project,$reoprtType);
             $result['materialList']=$this->excavatoleadlift->getMererialTypeList($project);
            // pre($result['excawiseLeadLift']);
            

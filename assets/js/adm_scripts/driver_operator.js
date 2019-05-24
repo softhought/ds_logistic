@@ -26,7 +26,7 @@ $(document).ready(function() {
 
                 var tripReportProject = $("#tripReportProject").val();
 
-                    $('#TripReportData').DataTable({
+                   /* $('#TripReportData').DataTable({
                         "dom": 'Bfrtip',
 
                         // "buttons": [
@@ -44,7 +44,7 @@ $(document).ready(function() {
                             extend: 'print',
                             title: tripReportProject
                           }]
-                    });
+                    }); */
                 },
                 error: function(jqXHR, exception) {
                     var msg = '';
@@ -94,7 +94,7 @@ $(document).ready(function() {
 
                 var tripReportProject = $("#tripReportProject").val();
 
-                    $('#TripReportData').DataTable({
+                /*    $('#TripReportData').DataTable({
                         "dom": 'Bfrtip',
 
                         // "buttons": [
@@ -112,7 +112,7 @@ $(document).ready(function() {
                             extend: 'print',
                             title: tripReportProject
                           }]
-                    });
+                    }); */
                 },
                 error: function(jqXHR, exception) {
                     var msg = '';
@@ -135,6 +135,14 @@ $(document).ready(function() {
                 }
             });
         }        
+    });
+
+
+         $(document).on('click','#downloadxls',function(){
+
+          $('#TripReportData').tableExport({type:'excel',escape:'false'});
+      
+        
     });
 
 

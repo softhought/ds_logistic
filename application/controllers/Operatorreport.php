@@ -55,6 +55,8 @@ class Operatorreport extends CI_Controller{
  
            $project=$this->input->post('project');
            $reoprtType='Operator';
+
+           $result['period']='('.date("d-m-Y",strtotime($fromdate)).' to '.date("d-m-Y",strtotime($todate)).')';
            
 
             $materialCount=$this->commondatamodel->rowcount('material_type');

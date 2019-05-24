@@ -9,6 +9,10 @@
 .readonly{
   background-color: #f2e8dc;
 }
+
+.inputerror{
+  border: 1px solid #dd4b39!important;
+}
 </style>
    <section class="content-header">
       <h1>

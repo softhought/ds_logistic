@@ -14,24 +14,26 @@ vertical-align: inherit;
 
 </style>
 <input type="hidden" name="tripReportProject" id="tripReportProject" value="<?php echo $tripReportProject; ?>">
+<div class="download" id="download" style="display:block;">
+              <button class="btn bg-purple btn-flat margin" name="TripReportdownloadxls" id="TripReportdownloadxls"  >Download XLS</button> 
+            </div>
 <div class="datatalberes" style="overflow-x:auto;">
 
 
 <table id="TripReportData" class="table table-bordered table-striped dataTables" style="border-collapse: collapse !important;">
-                <thead> 
-                <tr>
-                  <th rowspan="1" colspan="5" style="text-align:center;"><?php echo $tripReportProject; ?></th>
+                
+                <tr class="projectHeading">
+                  <td  colspan="100%" style="text-align:center;"><?php echo $tripReportProject.' '.$period; ?></td>
                 </tr>              
-                <tr>
+                <tr class="projectHeading">
                   <!-- <th>Sl</th> -->
-                  <th>Material</th>
-                  <th>A</th>
-                  <th>B</th>
-                  <th>C</th>
-                  <th>Total</th>      
+                  <td>Material</td>
+                  <td>A</td>
+                  <td>B</td>
+                  <td>C</td>
+                  <td>Total</td>      
                 </tr>
-                </thead>
-                <tbody>
+              
                 
                   <?php 
 					// echo "<pre>";
@@ -46,16 +48,16 @@ vertical-align: inherit;
 					<tr>
 						<!-- <td><?php echo $i; ?></td> -->
                         <td><?php echo $value['materialType']; ?></td>
-                        <td><?php echo number_format($value['A'],2); ?></td>
-                        <td><?php echo number_format($value['B'],2); ?></td>
-                        <td><?php echo number_format($value['C'],2); ?></td>
-                        <td><?php echo number_format($value['Total'],2); ?></td>
+                        <td style="text-align: right;"><?php echo number_format($value['A'],2); ?></td>
+                        <td style="text-align: right;"><?php echo number_format($value['B'],2); ?></td>
+                        <td style="text-align: right;"><?php echo number_format($value['C'],2); ?></td>
+                        <td style="text-align: right;"> <?php echo number_format($value['Total'],2); ?></td>
 				    </tr>              			
               	<?php
                     $i++;
               		}
               	?>
-                </tbody>
+             
                
               </table>
 

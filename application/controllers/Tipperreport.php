@@ -54,6 +54,7 @@ class Tipperreport extends CI_Controller{
            $project=$this->input->post('project');
            $reoprtType='Trip';
            
+           $result['period']='('.date("d-m-Y",strtotime($fromdate)).' to '.date("d-m-Y",strtotime($todate)).')';
 
             $materialCount=$this->commondatamodel->rowcount('material_type');
             $shiftCount=$this->commondatamodel->rowcount('shift_master');
@@ -129,6 +130,8 @@ class Tipperreport extends CI_Controller{
  
            $project=$this->input->post('project');
            $reoprtType='Quantity';
+
+           $result['period']='('.date("d-m-Y",strtotime($fromdate)).' to '.date("d-m-Y",strtotime($todate)).')';
            
 
             $materialCount=$this->commondatamodel->rowcount('material_type');

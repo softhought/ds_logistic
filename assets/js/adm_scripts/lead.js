@@ -1,6 +1,6 @@
 $(document ).ready(function() {
     var basepath = $("#basepath").val();
-  checkEditOption();
+ /* checkEditOption();*/
 
    
    
@@ -163,7 +163,7 @@ $(document ).ready(function() {
     success: function(data){
         $("#leadlistdata").html(data);
         $('#example').DataTable();
-        checkEditOption();
+     /*   checkEditOption(); */
        
     },
     error: function (jqXHR, exception) {

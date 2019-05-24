@@ -56,7 +56,8 @@ class Driverreport extends CI_Controller{
            $project=$this->input->post('project');
            $reoprtType='Driver';
            
-
+            $result['period']='('.date("d-m-Y",strtotime($fromdate)).' to '.date("d-m-Y",strtotime($todate)).')';
+            
             $materialCount=$this->commondatamodel->rowcount('material_type');
             $shiftCount=$this->commondatamodel->rowcount('shift_master');
             $result['driverReport']=$this->driverreport->getTipperDriverList($project,$reoprtType,$fromDate,$toDate);

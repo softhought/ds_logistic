@@ -12,6 +12,13 @@ vertical-align: inherit;
   border: 1px solid #aeaeae;
 }
 
+.projectHeading{
+  text-align: center;
+  font-weight: bold;
+  background-color: #0e8ac5!important;
+  color: #FFF !important;
+}
+
 
 </style>
 <input type="hidden" name="tripReportProject" id="tripReportProject" value="<?php echo $tripReportProject; ?>">
@@ -21,14 +28,13 @@ vertical-align: inherit;
 <div class="datatalberes" style="overflow-x:auto;">
 
 
-<table id="reporttable" class=" dataTables" style="border-collapse: collapse !important;">
-                <thead> 
-                <tr>
-                  <th  colspan="7" style="text-align:center;"><?php echo $tripReportProject; ?></th>
-                </tr>              
-                <tr>
+<table id="reporttable" class="table table-bordered table-striped dataTables" style="border-collapse: collapse !important;">
+               
+          <tr class="projectHeading"><td colspan="7"><?php echo $tripReportProject.' '.$period; ?></td>
+          </tr>                 
+                <tr class="projectHeading">
                   
-                  <th>&nbsp;</th>
+                  <td>&nbsp;</td>
                  <?php 
                   
                   foreach ($lead_lift_report as $lead_lift) {
@@ -36,8 +42,8 @@ vertical-align: inherit;
                       foreach ($materialList as $materiallist) {
                    ?>
 
-                     <th  style="text-align: center;">
-                      <?php if($t==0){echo $lead_lift->column_type;}?></th> 
+                     <td  style="text-align: center;">
+                      <?php if($t==0){echo $lead_lift->column_type;}?></td> 
 
                  <?php $t++;
                      }
@@ -45,10 +51,10 @@ vertical-align: inherit;
                   ?>
                    
                 </tr>
-                </thead>
-                <tbody>
+               
+               
 
-                           <tr>
+                           <tr class="projectHeading">
                         
                         <td>&nbsp;</td>
                        <?php 
@@ -115,7 +121,7 @@ vertical-align: inherit;
                                             $index++;
 
                                 ?>
-                                <td style="text-align: center;"><?php echo $meterialtype['LeadData'];?></td>
+                                <td style="text-align: right;"><?php echo $meterialtype['LeadData'];?></td>
                               <?php }}?>
                               
                                 
@@ -128,7 +134,7 @@ vertical-align: inherit;
                                     $newcolumnLead=$columnLead;
                                     foreach ($newcolumnLead as  $newcolumnLead) { 
                                       ?>
-                                       <td style="text-align: center;"><?php 
+                                       <td style="text-align: right;"><?php 
                                        
                                             echo number_format($newcolumnLead/$excavatorCntByshift,2);
                                       
@@ -143,7 +149,7 @@ vertical-align: inherit;
                                                   foreach ($materialList as $material_list) {
                                                ?>
 
-                                                 <td  style="text-align: center;">&nbsp; </td> 
+                                                 <td  style="text-align: right;">&nbsp; </td> 
 
                                              <?php 
                                                    }
@@ -159,7 +165,7 @@ vertical-align: inherit;
                   
               	?>
 
-                </tbody>
+              
                
               </table>
 

@@ -80,7 +80,7 @@ class Delayreport extends CI_Controller{
            $project=$this->input->post('sel_project');
            $reoprtType='TipperDelay';
            
-
+             $result['period']='('.date("d-m-Y",strtotime($shift_date)).')';
          
             $result['tipperDelayReport']=$this->delayreport->getTipperDelay($shift_date,$project);
 
@@ -143,7 +143,7 @@ class Delayreport extends CI_Controller{
            $project=$this->input->post('sel_project');
            $reoprtType='ExcavatorDelay';
            
-
+           $result['period']='('.date("d-m-Y",strtotime($shift_date)).')';
          
             $result['excavatorDelayReport']=$this->delayreport->getExcavatorDelay($shift_date,$project);
          
