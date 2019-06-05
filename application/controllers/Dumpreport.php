@@ -109,8 +109,9 @@ public function getTipperByProject()
                     "project_id"=>$project
                 ];
                 $projectName=$this->commondatamodel->getSingleRowByWhereCls('project_master',$where);
-               $result['tipperdumpReport']="Tipper Travelling Trip Report For ".$projectName->project_nickname;
+               $result['tipperdumpReport']="Tipper Performance Report For ".$projectName->project_nickname;
             }else {
+               // $result['tipperdumpReport']="Tipper Travelling Trip Report";
                 $result['tipperdumpReport']="Tipper Travelling Trip Report";
             }
             

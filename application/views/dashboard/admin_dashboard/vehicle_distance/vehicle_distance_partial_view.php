@@ -103,7 +103,7 @@ input{
                  <input class="readonly" type="text" name="km_differ[]" id="km_differ_<?php echo $row;?>" value="<?php if($mode=="EDIT"){echo $value->km_differ;}else{echo '';}?>" readonly >
                </td>
 
-            <td><input class="startHour" type="text"  name="start_hour[]" id="start_hour_<?php echo $row;?>" autocomplete="off"  value="<?php if($mode=="EDIT"){echo $value->start_time;}else{echo '';}?>" onKeyUp="numericFilter(this);">
+            <td><input class="startHour" type="text"  name="start_hour[]" id="start_hour_<?php echo $row;?>" autocomplete="off"  value="<?php if($mode=="EDIT"){echo $value->start_time;}else{echo '';}?>" onKeyUp="numericFilter(this);" readonly >
                 &nbsp;<!-- <i class="glyphicon glyphicon-remove-circle reset"  onclick="return resetInput('start_hour_',<?php echo $row;?>)"></i> -->
 
               <!--  <input type="text" class=" timepicker" id="end_time" name="end_time" placeholder="End Time" autocomplete="off" value="" > -->

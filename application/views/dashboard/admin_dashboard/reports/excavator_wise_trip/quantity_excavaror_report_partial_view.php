@@ -74,8 +74,9 @@
                 
                   <?php 
 					// echo "<pre>";
-					// print_r($shiftloop);
+					// print_r($excawiseReport);
 					// echo "</pre>";
+        //  exit;
 					
               		$i = 1;
                   $colTripCount=[];

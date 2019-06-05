@@ -106,7 +106,7 @@ input{
                </td>
 
             <td >
-              <input class="<?php echo $startinput?> startHour" type="text"  name="start_hour[]" id="start_hour_<?php echo $row;?>" autocomplete="off"  value="<?php echo $value['lastHour'];?>" onKeyUp="numericFilter(this);">
+              <input class="<?php echo $startinput?> startHour" type="text"  name="start_hour[]" id="start_hour_<?php echo $row;?>" autocomplete="off"  value="<?php echo $value['lastHour'];?>" onKeyUp="numericFilter(this);" readonly >
                 &nbsp;<!-- <i class="glyphicon glyphicon-remove-circle reset"  onclick="return resetInput('start_hour_',<?php echo $row;?>)"></i> -->
 
               <!--  <input type="text" class=" timepicker" id="end_time" name="end_time" placeholder="End Time" autocomplete="off" value="" > -->

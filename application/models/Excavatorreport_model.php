@@ -195,7 +195,7 @@ public function getShiftWiseQuantity($fromDate,$toDate,$material,$project_materi
       if($query->num_rows()>0){
        
         $row = $query->row();
-           return $qty = number_format($row->qty,2);
+           return $qty = $row->qty;
        
       }
       else

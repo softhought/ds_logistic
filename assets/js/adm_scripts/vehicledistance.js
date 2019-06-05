@@ -17,7 +17,7 @@ $(document ).ready(function() {
     
     success: function(data){
          $("#observer_dropdown").html(data);
-         $('.selectpicker').selectpicker();
+        $('.selectpicker').selectpicker();
       
        
     },
@@ -251,7 +251,9 @@ $(document).on('input','.startKM,.endKM',function(){
         var differ = (end_distance-start_distance);
 
 
-        $('#km_differ_'+rowDtlNo[2]).val(differ);
+        //$('#km_differ_'+rowDtlNo[2]).val(differ);
+
+        $('#km_differ_'+rowDtlNo[2]).val(differ.toFixed(2));
 
 
 
@@ -283,7 +285,8 @@ $(document).on('input','.startHour,.endHour',function(){
         var differ = (end_hour-start_hour);
 
 
-        $('#time_differ_'+rowDtlNo[2]).val(differ); 
+       // $('#time_differ_'+rowDtlNo[2]).val(differ); 
+        $('#time_differ_'+rowDtlNo[2]).val(differ.toFixed(2)); 
 
         if (differ>8 || differ<-8) {
 

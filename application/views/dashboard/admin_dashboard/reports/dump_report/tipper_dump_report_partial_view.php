@@ -35,10 +35,10 @@ vertical-align: inherit;
                 <tr class="projectHeading">
                  <td>Sl</td> 
                  <td>Material Type</td> 
-                  <td>Shift Date</td>
-                  <td>Shift Code</td>
-                  <td>Tipper</td>
-                  <td>Excavator</td>
+                  <td>Date</td>
+                  <td>Shift</td>
+                  <td>Tipper No.</td>
+                  <td>Loaded By</td>
                   <td>Dumping Yard</td>
                   <td>Start Time</td>
                   <td>End Time</td>

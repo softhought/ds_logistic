@@ -15,7 +15,7 @@
       </h1>
       <ol class="breadcrumb">
         <li><a href="<?php echo base_url(); ?>dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Tipper Dump Report</li>
+        <li class="active">Tipper Performance Report</li>
       </ol>
     </section>
 
@@ -24,7 +24,7 @@
 
 		    <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Tipper Dump Report</h3>&nbsp;
+              <h3 class="box-title">Tipper Performance Report</h3>&nbsp;
              
             </div>
             <!-- /.box-header -->

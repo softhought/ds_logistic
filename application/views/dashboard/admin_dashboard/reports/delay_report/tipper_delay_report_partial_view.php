@@ -31,9 +31,9 @@ vertical-align: inherit;
                   <td>Login Time</td>
                   <td  align="center">Shift</td>
                   <td>First Trip Start</td>
-                  <td>Start Ideal Time</td>
+                  <td>Start Idle Time</td>
                   <td>Last Trip End</td>
-                  <td>End Ideal Time</td>
+                  <td>End Idle Time</td>
                  
                  
                 </tr>
@@ -61,8 +61,40 @@ vertical-align: inherit;
 
                            $shiftStart = strtotime($value['startIdelTime']->start_time);
                            $firstTripStart = strtotime(date('H:i:s',strtotime($value['startIdelTime']->session_satrt_time)));
+                           $lastTripEnd = strtotime(date('H:i:s',strtotime($value['endIdelTime']->session_end_time)));
 
-                           echo $stIdelTime = round(abs($firstTripStart - $shiftStart) / 60,2). " minute";
+                          // echo $stIdelTime = round(abs($firstTripStart - $shiftStart) / 60,2). " minute";
+
+                            $stIdelTime= abs(floor(($firstTripStart - $shiftStart)/60));
+
+
+                               if ($value['startIdelTime']->shift_code=='C') {
+                                    
+                                      $timetripst = '00:00:00';
+                                     //strtotime($timetripst);
+                                     if($firstTripStart >= strtotime($timetripst) && $firstTripStart<=$lastTripEnd){
+
+                                      $stIdelTime = (1440-$stIdelTime);  // 24*60
+                                     }
+                                   
+                                  }
+
+                            if ($stIdelTime>60 || $stIdelTime<-60) {
+
+                               $stIdelTimeHour = floor($stIdelTime/60);
+                               $stIdelTimeMin = ($stIdelTime%60);
+
+                                if ($stIdelTimeMin!=0) {
+                                  echo $stIdelTimeHour. " hour " .$stIdelTimeMin. "  minute";
+                                }else{
+                                   echo $stIdelTimeHour. "hour";
+                                }
+                                 
+
+                            }else{
+                                echo $stIdelTime. " minute";
+                            }
+                          
                           
 
                         ?>
@@ -76,7 +108,39 @@ vertical-align: inherit;
                            $lastTripEnd = strtotime(date('H:i:s',strtotime($value['endIdelTime']->session_end_time)));
 
                            if ($value['endIdelTime']->session_end_time!='') {
-                               echo $endIdelTime = round(abs($lastTripEnd - $shiftEnd) / 60,2). " minute";
+                              
+                              // echo $endIdelTime = round(abs($lastTripEnd - $shiftEnd) / 60,2). " minute";
+
+                                $endIdelTime= abs(floor(($lastTripEnd-$shiftEnd)/60));
+
+                                    if ($value['startIdelTime']->shift_code=='C') {
+                                    
+                                      $timetrip = '23:59:59';
+                                     strtotime($timetrip);
+                                     $lastTripEnd;
+
+                                     if($lastTripEnd >= $shiftStart && $lastTripEnd <= strtotime($timetrip)){
+
+                                      $endIdelTime = (1440-$endIdelTime);  // 24*60
+                                     }
+
+                                   
+                                  }
+
+                                if($endIdelTime>60 || $endIdelTime<-60){
+                                  $endIdelTimeHour=floor($endIdelTime/60);
+                                  $endIdelTimeMin = ($endIdelTime%60);
+
+                                     if ($endIdelTimeMin!=0) {
+                                        echo $endIdelTimeHour. " hour " .$endIdelTimeMin. "  minute";
+                                      }else{
+                                         echo $endIdelTimeHour. "hour";
+                                      }
+
+                                }else{
+
+                                     echo $endIdelTime. " minute";
+                                }
                            }
                          
                           

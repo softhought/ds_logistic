@@ -377,6 +377,25 @@ public function getObserverByProject()
 
                     //set readonly all before insert new data
 
+                    /* check data exist or not */ 
+
+
+                    $check_array_dup = array(
+                                    'project_id' =>  $projectid, 
+                                    'vehicle_type_id' =>  $vehicle_type_id, 
+                                    'shift_date' =>  $shiftdate, 
+                                    'shift_code' =>  $shift_code, 
+                                  );
+
+                   $isExist = $this->commondatamodel->duplicateValueCheck('vehicle_distance_master',$check_array_dup);
+
+                   // insert only if data not exist
+                   if ($isExist) {
+                     $insertData=0;
+                   }else{
+
+                  
+
                     $readonly_arr = array('is_readonly' => 'Y' );
 
                     $where_readonly = array(
@@ -403,7 +422,7 @@ public function getObserverByProject()
                    
 
                    
-                     /* insert detail data*/
+                     /* insert detail data */  
                     for ($i=0; $i < count($equipment_id); $i++) { 
 
 
@@ -449,7 +468,7 @@ public function getObserverByProject()
 
 
 
-            
+             }// else of isExist
                
                     
 
@@ -465,7 +484,7 @@ public function getObserverByProject()
                     {
                         $json_response = array(
                             "msg_status" => 1,
-                            "msg_data" => "There is some problem.Try again"
+                            "msg_data" => "There is some problem.Try again "
                         );
                     }
 

@@ -31,8 +31,9 @@ vertical-align: inherit;
                 <tr class="projectHeading">
                   <td>Sl</td>
                   <td>Tipper</td>
+                  <!--  <td>Last Modified</td> -->
                   <td>Sync Date</td>
-                  <td>Last Modified</td>
+              
                   <td>Mobile No</td>
                   <td>Mobile UID</td>
                      
@@ -52,7 +53,7 @@ vertical-align: inherit;
 					<tr>
 		                    <td><?php echo $i; ?></td> 
                         <td><?php echo $value['tipperData']->equipment_name;?></td>
-                        <td><?php echo date("d-m-Y H:i:s",strtotime($value['lastSync']->capture_on));?></td>
+                      <!--   <td><?php echo date("d-m-Y H:i:s",strtotime($value['lastSync']->capture_on));?></td> -->
                         <td><?php 
 
                          if($value['lastSync']->last_modified!=NULL){
