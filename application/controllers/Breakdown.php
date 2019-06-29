@@ -254,7 +254,7 @@ public function getBreakdownlistbydate()
 
               $breakdowndate = $this->input->post('breakdowndate');
 
-                if($breakdowndate!=""){
+             if($breakdowndate!=""){
                 $breakdowndate = str_replace('/', '-', $breakdowndate);
                 $breakdowndate = date("Y-m-d",strtotime($breakdowndate));
              }

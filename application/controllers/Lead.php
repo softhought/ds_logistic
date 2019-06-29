@@ -327,7 +327,17 @@ public function getExcavatorByServier()
             $sel_servier = $this->input->post('sel_servier');
             $project = $this->input->post('project');
             $sel_shift = $this->input->post('sel_shift');
-            $shiftdate = date("Y-m-d",strtotime($this->input->post('shiftdate')));
+            $shiftdate = $this->input->post('shiftdate');
+            
+              if($shiftdate!=""){
+                $shiftdate = str_replace('/', '-', $shiftdate);
+                $shiftdate = date("Y-m-d",strtotime($shiftdate));
+              
+             }
+             else{
+                 $shiftdate = NULL;
+                
+             }
             
             if($sel_servier!='0'){
             $where_serv = array('supervisor_master.supervisor_id' => $sel_servier); 

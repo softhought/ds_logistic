@@ -570,7 +570,43 @@ class Logisticservice extends CI_Controller{
 }
 
 	
-	
+
+	public function updateLocalLoginLogoutTransHistory(){
+		
+		header("Access-Control-Allow-Origin: *");
+		header("Access-Control-Allow-Credentials: true");
+		header("Access-Control-Max-Age: 1000");
+		header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Cache-Control, Pragma, Authorization, Accept, Accept-Encoding,x-api-key");
+		header("Access-Control-Allow-Methods: PUT, POST, GET, OPTIONS, DELETE"); 
+			
+			$json_response = [];
+			$headers = $this->input->request_headers();
+        
+		    $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata);
+			
+			
+			$data = $this->logisticmodel->updateLocalLoginLogoutTransHistory($request);
+			
+			if($data){
+				$json_response = [
+                    "msg_status"=>HTTP_SUCCESS,
+                    "msg_data"=>"SUCCESS",
+					"result_data" => $data
+                ];
+			}
+			else{
+				$json_response = [
+                    "msg_status"=>HTTP_SUCCESS,
+                    "msg_data"=>"There is some problem.Please try again",
+                ];
+			}
+        
+        
+		header('Content-Type: application/json');
+		echo json_encode( $json_response );
+		exit;
+	}
 	
 	
 	

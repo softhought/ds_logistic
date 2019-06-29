@@ -91,6 +91,7 @@ class Excavatoleadliftreport_model extends CI_Model
                         ->where($where)
                        // ->where('DATE_FORMAT(`lead_against_vehicle`.`shift_date`,"%Y-%m-%d") >= ', $fromDate)
                        // ->where('DATE_FORMAT(`lead_against_vehicle`.`shift_date`,"%Y-%m-%d") <= ', $toDate)
+                        ->group_by('vehicle_master.vehicle_id') /* added on 08.06.2019*/
                         ->get();
                         #q();
 
