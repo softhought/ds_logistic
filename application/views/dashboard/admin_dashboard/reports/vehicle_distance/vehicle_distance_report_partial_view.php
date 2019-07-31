@@ -20,8 +20,11 @@ display: none!important;
 
   <div class="download" id="download" style="display:block;">
               <button class="btn bg-purple btn-flat margin" name="downloadxls" id="downloadxls"  >Download Excel</button> 
+              <button class="btn bg-olive btn-flat margin" onclick="printDiv('printarea')"  ><i class="fa fa-print" aria-hidden="true"></i>
+  Print</button> 
+  
             </div>
-<div class="datatalberes" style="overflow-x:auto;">
+<div class="datatalberes" id="printarea" style="overflow-x:auto;">
 
 
 <table id="DistanceReportData" class="table table-bordered table-striped dataTables" style="border-collapse: collapse !important;text-align: center;overflow-x: scroll;">

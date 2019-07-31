@@ -18,9 +18,12 @@ vertical-align: inherit;
 <input type="hidden" name="tripReportProject" id="tripReportProject" value="<?php echo $tripReportProject; ?>">
 <div class="download" id="download" style="display:block;">
               <button class="btn bg-purple btn-flat margin" name="TripReportdownloadxls" id="TripReportdownloadxls"  >Download XLS</button> 
+
+<button class="btn bg-olive btn-flat margin" onclick="printDiv('printarea')"  ><i class="fa fa-print" aria-hidden="true"></i>
+  Print</button> 
             </div>
 
-<div class="datatalberes" style="overflow-x:auto;">
+<div class="datatalberes" id="printarea" style="overflow-x:auto;">
 
 
 <table id="TripReportData" class="table table-bordered table-striped dataTables" style="border-collapse: collapse !important;">
@@ -44,8 +47,16 @@ vertical-align: inherit;
 					// echo "</pre>";
 					
               		$i = 1;
+                  $totalA=0;
+                  $totalB=0;
+                  $totalC=0;
+                  $grandtotal=0;
               		foreach ($tripReport as $value) {                      
-                                           
+                           
+                           $totalA+=$value['A']; 
+                           $totalB+=$value['B'];  
+                           $totalC+=$value['C'];  
+                           $grandtotal+=$value['Total'];          
               		?>
 
 					<tr>
@@ -61,7 +72,15 @@ vertical-align: inherit;
               		}
               	?>
                
-               
+               <tr>
+
+                        <td>Total</td>
+                        <td style="text-align: right;"><?php echo $totalA;?></td>
+                        <td style="text-align: right;"><?php echo $totalB;?></td>
+                        <td style="text-align: right;"><?php echo $totalC;?></td>
+                        <td style="text-align: right;"><?php echo $grandtotal;?></td>
+                 
+               </tr>
               </table>
 
 

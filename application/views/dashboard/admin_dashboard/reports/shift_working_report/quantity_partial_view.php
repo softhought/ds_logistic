@@ -16,8 +16,11 @@ vertical-align: inherit;
 <input type="hidden" name="tripReportProject" id="tripReportProject" value="<?php echo $tripReportProject; ?>">
 <div class="download" id="download" style="display:block;">
               <button class="btn bg-purple btn-flat margin" name="TripReportdownloadxls" id="TripReportdownloadxls"  >Download XLS</button> 
+              <button class="btn bg-olive btn-flat margin" onclick="printDiv('printarea')"  ><i class="fa fa-print" aria-hidden="true"></i>
+  Print</button> 
+  
             </div>
-<div class="datatalberes" style="overflow-x:auto;">
+<div class="datatalberes" id="printarea" style="overflow-x:auto;">
 
 
 <table id="TripReportData" class="table table-bordered table-striped dataTables" style="border-collapse: collapse !important;">
@@ -28,10 +31,10 @@ vertical-align: inherit;
                 <tr class="projectHeading">
                   <!-- <th>Sl</th> -->
                   <td>Material</td>
-                  <td>A</td>
-                  <td>B</td>
-                  <td>C</td>
-                  <td>Total</td>      
+                  <td align="center">A</td>
+                  <td align="center">B</td>
+                  <td align="center">C</td>
+                  <td align="center">Total</td>      
                 </tr>
               
                 
@@ -41,7 +44,16 @@ vertical-align: inherit;
 					// echo "</pre>";
 					
               		$i = 1;
-              		foreach ($tripReport as $value) {                      
+                  $totalA=0;
+                  $totalB=0;
+                  $totalC=0;
+                  $grandtotal=0;
+              		foreach ($tripReport as $value) {    
+
+                           $totalA+=$value['A']; 
+                           $totalB+=$value['B'];  
+                           $totalC+=$value['C'];  
+                           $grandtotal+=$value['Total'];                    
                                            
               		?>
 
@@ -57,6 +69,16 @@ vertical-align: inherit;
                     $i++;
               		}
               	?>
+
+                        <tr>
+
+                        <td>Total</td>
+                        <td style="text-align: right;"><?php echo number_format($totalA,2);?></td>
+                        <td style="text-align: right;"><?php echo number_format($totalB,2);?></td>
+                        <td style="text-align: right;"><?php echo number_format($totalC,2);?></td>
+                        <td style="text-align: right;"><?php echo number_format($grandtotal,2);?></td>
+                 
+               </tr>
              
                
               </table>

@@ -71,7 +71,8 @@ class Delayreport_model extends CI_Model{
                 ->join('project_master','project_master.project_id=vehicle_master.project_id','INNER')
                 ->join('shift_master','shift_master.shift_code=driver_tracking_history.shift_code','INNER')
 				->where($where)
-				->order_by('driver_tracking_history.track_history_id', 'asc')
+				//->order_by('driver_tracking_history.track_history_id', 'asc')
+                ->order_by('driver_tracking_history.session_satrt_time', 'asc')
 				->limit(1);
 		$query = $this->db->get();
 		
@@ -111,7 +112,8 @@ class Delayreport_model extends CI_Model{
                 ->join('project_master','project_master.project_id=vehicle_master.project_id','INNER')
                 ->join('shift_master','shift_master.shift_code=driver_tracking_history.shift_code','INNER')
 				->where($where)
-				->order_by('driver_tracking_history.track_history_id', 'desc')
+				//->order_by('driver_tracking_history.track_history_id', 'desc')
+                ->order_by('driver_tracking_history.session_end_time', 'desc')
 				->limit(1);
 		$query = $this->db->get();
 		
@@ -198,7 +200,8 @@ class Delayreport_model extends CI_Model{
                 ->join('project_master','project_master.project_id=vehicle_master.project_id','INNER')
                 ->join('shift_master','shift_master.shift_code=driver_tracking_history.shift_code','INNER')
 				->where($where)
-				->order_by('driver_tracking_history.track_history_id', 'asc')
+				//->order_by('driver_tracking_history.track_history_id', 'asc')
+                ->order_by('driver_tracking_history.session_satrt_time', 'asc')
 				->limit(1);
 		$query = $this->db->get();
 		
@@ -240,7 +243,8 @@ class Delayreport_model extends CI_Model{
                 ->join('project_master','project_master.project_id=vehicle_master.project_id','INNER')
                 ->join('shift_master','shift_master.shift_code=driver_tracking_history.shift_code','INNER')
 				->where($where)
-				->order_by('driver_tracking_history.track_history_id', 'desc')
+                //->order_by('driver_tracking_history.track_history_id', 'desc')
+				->order_by('driver_tracking_history.session_end_time', 'desc')
 				->limit(1);
 		$query = $this->db->get();
 		

@@ -136,8 +136,6 @@
 <script src="<?php echo base_url(); ?>assets/js/commonutilfunc.js"></script>
 
 
-
-
 <!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/adm_scripts/tracking.js"></script> -->
 	
 	
@@ -1058,6 +1056,17 @@
 
 
 <script>
+
+  function printDiv(divName) {
+     var printContents = document.getElementById(divName).innerHTML;
+     var originalContents = document.body.innerHTML;
+
+     document.body.innerHTML = printContents;
+
+     window.print();
+
+     //document.body.innerHTML = originalContents;
+}
 
 
     //Timepicker

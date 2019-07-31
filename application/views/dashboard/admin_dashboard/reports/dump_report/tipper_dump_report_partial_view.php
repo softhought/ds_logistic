@@ -24,13 +24,16 @@ vertical-align: inherit;
 <input type="hidden" name="tipperdumpReport" id="tipperdumpReport" value="<?php echo $tipperdumpReport; ?>">
 <div class="download" id="download" style="display:block;">
               <button class="btn bg-purple btn-flat margin" name="downloadxls" id="downloadxls"  >Download XLS</button> 
+              <button class="btn bg-olive btn-flat margin" onclick="printDiv('printarea')"  ><i class="fa fa-print" aria-hidden="true"></i>
+  Print</button> 
+  
             </div>
-<div class="datatalberes" style="overflow-x:auto;">
+<div class="datatalberes" id="printarea" style="overflow-x:auto;">
 
 
 <table id="TripReportData" class="table table-bordered table-striped dataTables" style="border-collapse: collapse !important;">
                
-                <tr class="projectHeading"><td colspan="9"><?php echo $tipperdumpReport.' '.$period; ?></td>
+                <tr class="projectHeading"><td colspan="10"><?php echo $tipperdumpReport.' '.$period; ?></td>
                 </tr>                
                 <tr class="projectHeading">
                  <td>Sl</td> 
@@ -42,6 +45,7 @@ vertical-align: inherit;
                   <td>Dumping Yard</td>
                   <td>Start Time</td>
                   <td>End Time</td>
+                  <td>Total</td>
                    
                 </tr>
              
@@ -52,6 +56,8 @@ vertical-align: inherit;
 					// echo "</pre>";
 					
               		$i = 1;
+                  $totalHour=0;
+                  $totalMinute=0;
               		foreach ($reportData as $value) {                      
                                            
               		?>
@@ -66,12 +72,86 @@ vertical-align: inherit;
              <td><?php echo $value->dumping_yard_name; ?></td>
              <td><?php echo date ('H:i:s',strtotime($value->session_satrt_time)) ;?></td>
             <td><?php echo date ('H:i:s',strtotime($value->session_end_time)) ;?></td>
+
+            <td><?php
+
+                   $TripStart = strtotime(date('H:i:s',strtotime($value->session_satrt_time)));
+                   $TripEnd = strtotime(date('H:i:s',strtotime($value->session_end_time)));
+                   $TripTime= abs(floor(($TripEnd - $TripStart)/60));
+
+                   // for check 31.07.2019
+                    if ($value->shift_code=='C') {
+                                    
+                                      $timetripst = '00:00:00';
+                                      $endhour = '23:59:59';
+                                     //strtotime($timetripst);
+                                     if($TripStart > $TripEnd){
+
+                                      $TripTime = (1440-$TripTime);  // 24*60
+                                     }
+                                   
+                    }
+
+
+                    if ($TripTime>60 || $TripTime<-60) {
+
+                               $tripTimeHour = floor($TripTime/60);
+                               $tripTimeMin = ($TripTime%60);
+                               $totalMinute+=$tripTimeMin;
+                               $totalHour+=$tripTimeHour;
+
+                                if ($tripTimeMin!=0) {
+                                  echo $tripTimeHour. " hour " .$tripTimeMin. "  minute";
+                                }else{
+                                   echo $tripTimeHour. "hour";
+                                }
+                                 
+
+                            }else{
+                                echo $TripTime. " minute";
+                                $totalMinute+=$TripTime;
+                            }
+
+            ?>
+              
+
+            </td> 
                        
 				    </tr>              			
               	<?php
                     $i++;
               		}
               	?>
+
+                <tr>
+                  <td>Total</td>
+                  <td colspan="8"></td>
+                   <td><?php
+
+                  
+                   
+
+                      if ($totalMinute>60 || $totalMinute<-60) {
+
+                               $totalHour += floor($totalMinute/60);
+                               $totalMinute = ($totalMinute%60);
+                               
+
+                                if ($totalMinute!=0) {
+                                  echo $totalHour. " hour " .$totalMinute. "  minute";
+                                }else{
+                                   echo $totalHour. "hour";
+                                }
+                                 
+
+                            }else{
+                                echo $totalMinute. " minute";
+                               
+                            }
+
+
+                   ?></td>
+                </tr>
              
                
               </table>

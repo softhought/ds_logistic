@@ -33,7 +33,7 @@ vertical-align: inherit;
                   <th>End Time</th> 
                   <th>Carrying</th> 
                   <th>Dum. Yard</th> 
-                  <th>Lead</th> 
+                  <th style="text-align: right;">Lead</th> 
                   <th>Rl In Face</th> 
                   <th>Rl In Dump</th> 
                  

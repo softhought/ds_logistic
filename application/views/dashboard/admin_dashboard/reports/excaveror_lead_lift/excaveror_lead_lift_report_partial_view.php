@@ -24,8 +24,10 @@ vertical-align: inherit;
 <input type="hidden" name="tripReportProject" id="tripReportProject" value="<?php echo $tripReportProject; ?>">
 <div class="download" id="download" style="display:block;">
               <button class="btn bg-purple btn-flat margin" name="downloadxls" id="downloadxls"  >Download XLS</button> 
+              <button class="btn bg-olive btn-flat margin" onclick="printDiv('printarea')"  ><i class="fa fa-print" aria-hidden="true"></i>
+  Print</button> 
             </div>
-<div class="datatalberes" style="overflow-x:auto;">
+<div class="datatalberes" id="printarea" style="overflow-x:auto;">
 
 
 <table id="reporttable" class="table table-bordered table-striped dataTables" style="border-collapse: collapse !important;">
@@ -43,7 +45,7 @@ vertical-align: inherit;
                    ?>
 
                      <td  style="text-align: center;">
-                      <?php if($t==0){echo $lead_lift->column_type;}?></td> 
+                      <?php if($t==1){echo $lead_lift->column_type;}?></td> 
 
                  <?php $t++;
                      }
