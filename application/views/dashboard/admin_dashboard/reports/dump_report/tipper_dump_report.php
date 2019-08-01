@@ -65,7 +65,7 @@
 
               <div class="row" style="margin-bottom: 0;">
                     
-                    <div class="col-md-offset-4 col-md-2">
+                    <div class="col-md-offset-4 col-md-4">
                     <div class="form-group">
                             <label for="project">Project</label> 
                             <select id="project" name="project" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
@@ -83,18 +83,42 @@
                           </div>
                     </div> <!-- /.col-md-4 END -->
 
-                    <div class="col-md-2">
-                    <div class="form-group">
-                            <label for="tipper">Tipper</label> 
-                            <div id="tipper_dropdown">
-                            <select id="sel_tipper" name="sel_tipper" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
-                              <option value="0">Select</option>
-                                
-                            </select></div>
-                          </div>
-                    </div> <!-- /.col-md-4 END -->
+                    
 
  
+                    </div> <!-- row end-->
+
+
+                    <div class="row" style="margin-bottom: 0;">
+                    
+                        <div class="col-md-offset-4  col-md-2">
+                             <div class="form-group">
+                                  <label for="tipper">Tipper</label> 
+                                  <div id="tipper_dropdown">
+                                  <select id="sel_tipper" name="sel_tipper" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
+                                    <option value="0">Select</option>
+                                      
+                                  </select></div>
+                                </div>
+                          </div> <!-- /.col-md-4 END -->
+
+                          <div class="col-md-2">
+                             <div class="form-group">
+                                    <label for="shift">Shift</label> 
+                                         <select id="shift" name="shift" class="form-control selectpicker" data-show-subtext="true" data-live-search="true">
+                                            <option value="0">Select</option>
+                                            <?php 
+                                              if($bodycontent['shift'])
+                                              {
+                                                foreach($bodycontent['shift'] as $shift)
+                                                { ?>
+                                                    <option value="<?php echo $shift->shift_code; ?>" ><strong style="font-weight:700;"><?php echo $shift->shift_code; ?></strong> </option>
+                                        <?php   }
+                                        }
+                                      ?>
+                                  </select>
+                                </div>
+                          </div> <!-- /.col-md-4 END -->
                     </div> <!-- row end-->
 
 

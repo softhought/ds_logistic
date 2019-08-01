@@ -19,6 +19,8 @@ class Dumpreport extends CI_Controller{
         {   $result = [];            
             $page = 'dashboard/admin_dashboard/reports/dump_report/tipper_dump_report';
             $result['projectList'] = $this->commondatamodel->getAllDropdownData("project_master");
+            $result['shift'] = $this->commondatamodel->getAllDropdownData("shift_master");
+
            // $result['trackingList']=$this->trackingmodel->getTrackingDetailsList();
           
             $header = "";
@@ -99,10 +101,11 @@ public function getTipperByProject()
 
             $project=$this->input->post('project');
             $sel_tipper=$this->input->post('sel_tipper');
+             $shift=$this->input->post('shift');
            
             $result['period']='('.date("d-m-Y",strtotime($fromdate)).' to '.date("d-m-Y",strtotime($todate)).')';
             
-            $result['reportData']=$this->dumpreport->getTripReport($fromDate,$toDate,$project,$sel_tipper);
+            $result['reportData']=$this->dumpreport->getTripReport($fromDate,$toDate,$project,$sel_tipper,$shift);
             
             if ($project!=0) {
                 $where=[

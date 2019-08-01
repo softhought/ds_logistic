@@ -2,18 +2,43 @@
 
 class Dumpreportmodel extends CI_Model{
 	
-	public function getTripReport($fromDt,$toDt,$project,$sel_tipper)
+	public function getTripReport($fromDt,$toDt,$project,$sel_tipper,$shift)
     {
+
         $data = array();
         if ($sel_tipper!=0) {
-            $where = array(
+           
+            if($shift!='0'){
+                $where = array(
+                    'vehicle_master.vehicle_id' => $sel_tipper, 
+                    'project_master.project_id' => $project,
+                    'driver_tracking_history.shift_code' => $shift
+                  );
+            }
+            else{
+                $where = array(
                     'vehicle_master.vehicle_id' => $sel_tipper, 
                     'project_master.project_id' => $project
                   );
+            }
+            
         }else{
-             $where = array('project_master.project_id' => $project);
+            
+            if($shift=='0'){
+                  $where = array('project_master.project_id' => $project);
+
+               
+              }   
+           else{
+
+            $where = array(
+                                'project_master.project_id' => $project,
+                                'driver_tracking_history.shift_code' => $shift
+                             );
+           }     
+                       
         }
-       
+       //pre($where);
 
         $query=$this->db->select('driver_tracking_history.*,
                                     vehicle_master.equipment_name,
@@ -33,6 +58,7 @@ class Dumpreportmodel extends CI_Model{
                         ->order_by("driver_tracking_history.session_satrt_time", "desc")
                         ->limit(15000)
                         ->get();
+                        
         if($query->num_rows()> 0)
         {
             foreach ($query->result() as $rows)
