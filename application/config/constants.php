@@ -92,7 +92,7 @@ define('HTTP_INSERT',500);
 define('HTTP_UPDATE',501);
 define('HTTP_LOGIN',100);
 
-define('CURRENT_APP_VERSION',102003);
+define('CURRENT_APP_VERSION',107003);
 
 define('EMPLOYEE_TYPE',
 		serialize(
@@ -107,6 +107,8 @@ define('EMPLOYEE_TYPE',
 define ("FRUITS", serialize (array ("apple", "cherry", "banana"))); 
 
 #define('EMPLOYEE_TYPE', array('SUPERVISOR', 'OBSERVABLE','SERVIER'));
+
+define('IMPINFO','If any changes done,click sync button in app.');
 
 
 

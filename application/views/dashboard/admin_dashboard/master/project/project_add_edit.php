@@ -28,6 +28,7 @@
               $attr = array("id"=>"projectForm","name"=>"projectForm");
               echo form_open('',$attr); ?>
                 <div class="box-body">
+                <p style="font-size: 12px;color: #971414;letter-spacing: 1px;text-align: center;font-weight: bold;">(Note:<?php echo IMPINFO;?> )</p>
 
                   <div class="row">
                   <div class="col-md-12">

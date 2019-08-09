@@ -24,6 +24,7 @@
                     <a href="<?php echo base_url();?>master/supervisor" class="link_tab"><span class="glyphicon glyphicon-list"></span></a>
                 </div>
                 <div class="box-body">  
+                <p style="font-size: 12px;color: #971414;letter-spacing: 1px;text-align: center;font-weight: bold;">(Note:<?php echo IMPINFO;?> )</p>
                 <p id="clsmsg" class="form_error"></p>                                
                     <form method="post" id="SupervisorForm">
                          <input type="hidden" name="supervisorID" id="supervisorID" value="<?php if($bodycontent['mode']=="EDIT"){echo $bodycontent['editSupervisor']->supervisor_id;}else{echo "0";}?>" />
